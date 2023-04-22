@@ -1,0 +1,193 @@
+#header {
+    width: 1200px;
+    margin: auto;
+}
+
+
+.inner-box,
+.util-nav {
+    display: flex;
+}
+
+.util-nav a>span {
+    cursor: pointer;
+}
+
+.util-nav a>i {
+    cursor: pointer;
+}
+
+#header a>i {
+    font-size: 16px;
+}
+
+
+#header>.top-wrap {
+    width: 1200px;
+    justify-content: space-between;
+    background-color: skyblue;
+    position: relative;
+    z-index: 90;
+}
+
+
+/*
+1. design 보였다 안보였다
+.gnb-wrap {
+    display: none;
+}
+
+.gnb-wrap.active {
+    display: block;
+}
+*/
+/*
+2. design 위 아래로 이동
+.gnb-wrap {
+    position: absolute;
+    transition: 1s;
+    top: -1000px;
+}
+
+.gnb-wrap.active {
+    top: 40px;
+}
+*/
+/* 3. design 위아래로 자연스럽게 올라갔다 내려갔다 */
+.gnb-wrap {
+    position: absolute;
+    transition: 1s;
+    height: 0;
+    overflow: hidden;
+    background-color: antiquewhite;
+}
+
+.gnb-wrap.active {
+    height: 400px;
+}
+
+.contents {
+    display: flex;
+    flex-wrap: wrap;
+    width: 1000px;
+    margin: auto;
+}
+
+.content {
+    width: 300px;
+    height: 300px;
+    background-color: antiquewhite;
+    margin: 10px;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+    padding-top: 70px;
+}
+
+.content>.caption {
+    height: 100px;
+    background-color: rgb(152, 88, 5);
+    color: #fff;
+    width: 100%;
+    position: absolute;
+    bottom: -100px;
+    transition: 1s;
+
+}
+
+.content:hover .caption {
+    bottom: 0;
+}
+
+.content.new {
+    position: relative;
+    /* top: 50px;
+    left: 50px; */
+}
+
+/* html 구조상 부모는 new,
+포지션상 부모는 content이므로
+new 디자인 제거함
+ */
+
+.content.new::after {
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    content: '베스트';
+    display: block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 2px solid red;
+    line-height: 50px;
+}
+
+
+
+.buttons button {
+    padding: 10px;
+    /*  1. div, span 
+    2. button
+    3. a*
+    */
+}
+
+.account-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.521);
+    opacity: 0;
+    z-index: -10;
+    display: none;
+}
+
+.account-container.active {
+    opacity: 1;
+    z-index: 2000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.account-contents form {
+    display: none;
+}
+
+.account-contents form.active {
+    display: block;
+    width: 100%;
+}
+
+.buttons>button:hover {
+    background-color: rgb(177, 18, 18);
+}
+
+.buttons>button.active {
+    background-color: rgb(177, 18, 18);
+}
+
+
+#closeForm {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: right;
+
+}
+
+
+@media screen and (max-width: 640px) {
+
+    .login-btn>span,
+    .register-btn>span {
+        display: none;
+    }
+
+    .contents {
+        width: 100%;
+
+    }
+}
