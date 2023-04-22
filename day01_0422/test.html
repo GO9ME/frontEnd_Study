@@ -1,17 +1,205 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>복습</title>
     <link rel="stylesheet" href="../styles/reset.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
+        #header {
+            width: 1200px;
+            margin: auto;
+        }
 
+        .inner-box,
+        .util-nav {
+            display: flex;
+        }
+
+        #header>.top-wrap {
+            width: 1200px;
+            justify-content: space-between;
+            background-color: skyblue;
+            position: relative;
+            z-index: 90;
+        }
+
+        #header a {
+            font-size: 16px;
+
+        }
+
+        /*
+        1. design 보였다 안보였다
+        .gnb-wrap {
+            display: none;
+        }
+
+        .gnb-wrap.active {
+            display: block;
+        }
+        */
+        /*
+        2. design 위 아래로 이동
+        .gnb-wrap {
+            position: absolute;
+            transition: 1s;
+            top: -1000px;
+        }
+
+        .gnb-wrap.active {
+            top: 40px;
+        }
+        */
+        /* 3. design 위아래로 자연스럽게 올라갔다 내려갔다 */
+        .gnb-wrap {
+            position: absolute;
+            transition: 1s;
+            height: 0;
+            overflow: hidden;
+            background-color: antiquewhite;
+        }
         
+        .gnb-wrap.active {
+            height: 400px;
+        }
+
     </style>
+
 </head>
+
 <body>
-    
+    <header id="header">
+
+        <div class="top-wrap">
+            <div class="inner-box" id="tip-box-top">
+                <a href="/main" class="btn-logo">
+                    <i class="ico-logo"></i>
+                    <h1 class="hidden">도미노피자</h1>
+                </a>
+
+                <div class="location active">
+                    <a href="javascript:void(0);" id="myloc" onclick="gpsLsm(gps_yn);"></a>
+                </div>
+
+                <div class="util-nav">
+                    <a href="/global/login"><span class="login-btn btn">로그인</span>
+                        <i class='bx bxs-user'></i>
+                    </a>
+                    <a href="/global/login?L=L"><span>회원가입</span>
+                        <i class='bx bxs-registered'></i>
+                    </a>
+
+                    <a href="javascript:void(0);" class="lang">
+                        <div class="select-type2 language">
+                            <select id="select-type2">
+                                <option value="/main?locale=ko">KOR</option>
+                                <option value="/main?locale=en">ENG</option>
+                            </select>
+                        </div>
+                    </a>
+                    <a href="#" class="gnb-btn"><i class='bx bx-menu'></i></a>
+                </div>
+            </div>
+        </div>
+        <!-- 문제 발생하지 않는 html 구조도 있고
+            문제가 발생하면 js 동작하지 않을 수 있고 
+        -->
+
+        <!-- main 1dep menu -->
+        <div id="gnb" class="gnb-wrap">
+            <div class="gnb-inner">
+                <ul>
+                    <li class="active">
+                        <a href="/goods/list?dsp_ctgr=C0101"><span>메뉴</span></a>
+                    </li>
+                    <li>
+                        <a href="/ecoupon/main"><span>e-쿠폰</span></a>
+                    </li>
+                    <li>
+                        <a href="/voucher/list?gubun=M"><span>상품권 선물</span></a>
+                    </li>
+                    <li>
+                        <a href="/event/list?gubun=E0200"><span>이벤트·제휴</span></a>
+                    </li>
+                    <li>
+                        <a href="/branch"><span>매장검색</span></a>
+                    </li>
+                    <li>
+                        <a href="/company/contents/chainstore1"><span>가맹점 모집</span></a>
+                    </li>
+                </ul>
+                <a href="javascript:void(0);" class="snb-more">더보기</a>
+            </div>
+            <!-- 1depth menu end -->
+
+
+            <div class="snb-wrap">
+                <div class="inner-box">
+                    <div class="mnu-wrap">
+                        <div class="mnu-box">
+                            <a href="/event/mania">도미노 서비스</a>
+                            <ul>
+                                <li><a href="/event/mania">매니아 혜택</a></li>
+                                <li><a href="/goods/dominosMoment">도미노 모멘트</a></li>
+                                <li><a href="/quickOrder/index">퀵오더</a></li>
+                                <li><a href="/order/groupOrder">단체주문 서비스</a></li>
+                            </ul>
+                        </div>
+                        <div class="mnu-box">
+                            <a href="/bbs/faqList?view_gubun=W&amp;bbs_cd=online">고객센터</a>
+                            <ul>
+                                <li><a href="/bbs/faqList">자주하는 질문</a></li>
+                                <li><a href="#" onclick="qnaFormConfirm();"><span
+                                            class="qnaForm-title">문의하기/칭찬</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="mnu-box">
+                            <a href="/company/contents/overview">회사소개</a>
+                            <ul>
+                                <li><a href="/company/contents/overview">한국도미노피자</a></li>
+                                <li><a href="/company/tvcfList">광고갤러리</a></li>
+                                <li><a href="/company/contents/society">사회공헌활동</a></li>
+                                <li><a href="/company/contents/chainstore1">가맹점 모집</a></li>
+                                <li><a href="/company/jobList?type=R">인재채용</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="notice-box">
+                        <a href="/bbs/newsList?type=N">공지사항</a>
+                        <ul>
+                            <li><a href="/bbs/newsList?type=N">도미노뉴스</a></li>
+                            <li><a href="/bbs/newsList?type=P">보도자료</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- //main 1dep menu -->
+    </header>
+
+    <script>
+        const gnbBtn = document.querySelector('.gnb-btn');
+        let gnbBtnToggle = false;
+
+        gnbBtn.addEventListener('click', () => {
+            if (!gnbBtnToggle) {
+                document.querySelector('.gnb-wrap').classList.add('active');
+            } else {
+                document.querySelector('.gnb-wrap').classList.remove('active');
+            }
+            gnbBtnToggle = !gnbBtnToggle;
+        })
+
+
+        const loginBtn = document.querySelector('.login-btn');
+        const registerBtn = document.querySelector('.register-btn');
+
+    </script>
+
 </body>
+
 </html>
