@@ -1,0 +1,51 @@
+.main-banner img {
+    width: 100%;
+}
+
+.new-banner {
+    width: 1200px;
+    margin: auto;
+}
+
+.main-banner {
+    position: relative;
+}
+
+.mybtn {
+    position: absolute;
+    top: 50%;
+    z-index: 999;
+    font-size : 44px;
+    transform: translateY(-50%);
+}
+
+.my-next{
+    right : 0;
+}
+.my-prev{
+    left : 0;
+}
+@media screen and (max-width:1250px) {
+    .new-banner {
+        width: 100%;
+    }
+
+    .new-banner img {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width:640px) {
+    .new-banner {
+        width: 100%;
+    }
+
+    .swiper-slide {
+        text-align: center;
+    }
+
+    .new-banner img {
+        width: 96%;
+    }
+
+}

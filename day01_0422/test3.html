@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/reset.css">
+    <style>
+        fieldset{
+            width: 400px;
+            margin: auto;
+            padding: 20px 50px;
+        }
+        legend{
+            padding: 10px;
+        }
+        label{
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>checkbox</h1>
+    <fieldset class="subject">
+        <legend>선택하세요</legend>
+        <input type="checkbox" id="html" value="html">
+        <label for="html">HTML</label>
+        <input type="checkbox" id="css" value="css">
+        <label for="css">CSS</label>
+        <input type="checkbox" id="javascript" value="javascript">
+        <label for="javascript">JAVASCRIPT</label>
+        <input type="checkbox" id="react" value="react">
+        <label for="react">REACT</label>
+    </fieldset>
+
+    <script>
+        // 배열 또는 객체를 사용하여 여러개의 데이터를 선택할 수 있도록 개선
+
+        const subjects = document.querySelectorAll('.subject input');
+        subjects.forEach((subject)=>{
+            subject.addEventListener('change',()=>{
+                const check = subject.checked;
+                //checked 속성은 체크되면 true, false
+                if (check){
+                    const value = subject.value.toUpperCase();
+                    alert(value);
+                }
+            })
+        })
+
+        // 이런 값을 어떻게 표현해야 하는지 확인
+        // todolist => 장바구니
+    </script>
+</body>
+</html>

@@ -1,65 +1,143 @@
 <!DOCTYPE html>
-<html lang="ko">
-
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../styles/reset.css">
-    <link rel="stylesheet" href="../styles/test2.css">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../styles/reset.css">
+  <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+      .main-banner img{ width:100%;}
+      .new-banner{
+        width: 1200px; margin: auto;
+      }
+
+      .main-banner{ position: relative;}
+      .mybtn{ 
+        position: absolute;  top: 50%; 
+        z-index: 999;
+        font-size: 44px;
+        transform: translateY(-50%);
+      }
+
+      .my-next{ right:0; }
+      .my-prev{ left:0; }
+
+      @media screen and (max-width:1250px) {
+          .new-banner{ width:100%; }
+          .new-banner img{ width:100%; }
+      }
+      @media screen and (max-width:640px) {
+          .new-banner{ width:100%; }
+          .swiper-slide{ text-align: center;}
+          /* 자신의 페이지에서 사용할 클래스를 하나 더 만들어서 사용할 것 */
+          .new-banner img{ width:96%; }
+      }
+  </style>
+
 </head>
-
 <body>
-    <!-- 
-        https://cdn.dominos.co.kr/admin/upload/banner/20230227_x8rqVnhs.jpg
-        https://cdn.dominos.co.kr/admin/upload/banner/20230420_1rSKiqrw.jpg
-        https://cdn.dominos.co.kr/admin/upload/banner/20230411_0RdS1hZd.jpg
-        
-        https://cdn.dominos.co.kr/admin/upload/banner/20200626_9PFh173Q.jpg
-        https://cdn.dominos.co.kr/admin/upload/banner/20220621_Ummq9X16.jpg
-        https://cdn.dominos.co.kr/admin/upload/banner/20220114_MZKmWb0r.jpg
-    -->
+  <div class="main-banner">
+    <div class="swiper mainSwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="https://cdn.dominos.co.kr/admin/upload/banner/20230413_o9uy48jg.jpg" alt="">
+        </div>
+        <div class="swiper-slide">
+          <img src="https://cdn.dominos.co.kr/admin/upload/banner/20230411_0RdS1hZd.jpg" alt="">
+        </div>
+        <div class="swiper-slide">
+          <img src="https://cdn.dominos.co.kr/admin/upload/banner/20230420_1rSKiqrw.jpg" alt="">
+        </div>
 
-    <div class="main-banner">
-        <div class="swiper mainSwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">Slide 1</div>
-            <div class="swiper-slide">Slide 2</div>
-            <div class="swiper-slide">Slide 3</div>
-            <div class="swiper-slide">Slide 4</div>
-            <div class="swiper-slide">Slide 5</div>
-            <div class="swiper-slide">Slide 6</div>
-            <div class="swiper-slide">Slide 7</div>
-            <div class="swiper-slide">Slide 8</div>
-            <div class="swiper-slide">Slide 9</div>
-          </div>
-          <div class="swiper-pagination"></div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+    <!-- 마음대로 디자인 작업가능  -->
+    <div class="my-next mybtn"><i class="fa-regular fa-circle-right"></i></div>
+    <div class="my-prev mybtn"><i class="fa-regular fa-circle-left"></i></div>
+  </div>
+
+  <h2> new arrival </h2>
+  <div class="new-banner">
+    <div class="swiper smallSwiper">
+      <div class="swiper-wrapper">
+         
+        <div class="swiper-slide">
+          <img src="https://cdn.dominos.co.kr/admin/upload/banner/20200626_9PFh173Q.jpg" alt="">
+        </div>
+        <div class="swiper-slide">
+          <img src="https://cdn.dominos.co.kr/admin/upload/banner/20220621_Ummq9X16.jpg" alt="">
+        </div>
+        <div class="swiper-slide">
+          <img src="https://cdn.dominos.co.kr/admin/upload/banner/20220114_MZKmWb0r.jpg" alt="">
+        </div>
+        <div class="swiper-slide">
+          <img src="https://cdn.dominos.co.kr/admin/upload/banner/20200626_9PFh173Q.jpg" alt="">
+        </div>
+        <div class="swiper-slide">
+          <img src="https://cdn.dominos.co.kr/admin/upload/banner/20220621_Ummq9X16.jpg" alt="">
+        </div>
+        <div class="swiper-slide">
+          <img src="https://cdn.dominos.co.kr/admin/upload/banner/20220114_MZKmWb0r.jpg" alt="">
         </div>
       </div>
-    
-      <h2> new arrival </h2>
-      <div class="new-banner">
-        <div class="swiper smallSwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">Slide 1</div>
-            <div class="swiper-slide">Slide 2</div>
-            <div class="swiper-slide">Slide 3</div>
-            <div class="swiper-slide">Slide 4</div>
-            <div class="swiper-slide">Slide 5</div>
-            <div class="swiper-slide">Slide 6</div>
-            <div class="swiper-slide">Slide 7</div>
-            <div class="swiper-slide">Slide 8</div>
-            <div class="swiper-slide">Slide 9</div>
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-      </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    <script src="../js/test2.js"></script>
-
-    <!-- cdn.js에서 링크를 모두 가져다 사용할 수 있음 -->
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+  <!-- cdn.js 에서 링크를 모두 가져다 사용할 수 있음  -->
+  <script>
+    var mainSwiper = new Swiper(".mainSwiper", {
+      pagination: {
+        el: ".swiper-pagination",
+      },
+      navigation: {
+        nextEl: ".my-next",
+        prevEl: ".my-prev",
+      },
+    });
+  </script>
+  <script>
+    // 모바일 first : slidesPerView: 1, 한개씩 표현
+    var smallSwiper = new Swiper(".smallSwiper", {
+      slidesPerView: 1,
+      spaceBetween: 10,
+      navigation: {
+        nextEl: ".swiper-button-next",
+        prevEl: ".swiper-button-prev",
+      },
+      pagination: {
+        el: ".swiper-pagination",
+        clickable: true,
+      },
+      breakpoints: {
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 10,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 10,
+        } 
+      },
+    });
+  </script>
 </body>
-
 </html>
+
+<!-- 
+저번주 과제 : 사용할 openApi 찾아오기=>개발자 등록(키값발급)
+
+delpy(배포) : 회원가입( google.com ) 
+https://www.netlify.com/ : domain 무료로 발급하는 회사 
+https://github.com/ github(pages) : domain 무료사용 
+-->
