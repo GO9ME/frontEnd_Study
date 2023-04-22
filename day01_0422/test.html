@@ -66,6 +66,75 @@
         .gnb-wrap.active {
             height: 400px;
         }
+
+        .contents {
+            display: flex;
+            flex-wrap: wrap;
+            width: 1000px;
+            margin: auto;
+        }
+
+        .content {
+            width: 300px;
+            height: 300px;
+            background-color: antiquewhite;
+            margin: 10px;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            padding-top: 70px;
+        }
+
+        .content>.caption {
+            height: 100px;
+            background-color: rgb(152, 88, 5);
+            color: #fff;
+            width: 100%;
+            position: absolute;
+            bottom: -100px;
+            transition: 1s;
+
+        }
+
+        .content:hover .caption {
+            bottom: 0;
+        }
+
+        .content.new {
+            position: relative;
+            /* top: 50px;
+            left: 50px; */
+        }
+
+        /* html 구조상 부모는 new,
+        포지션상 부모는 content이므로
+        new 디자인 제거함
+         */
+        .content.new::after {
+            position: absolute;
+            left: 50px;
+            top: 50px;
+            content: '베스트';
+            display: block;
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+            border: 2px solid red;
+            line-height: 50px;
+        }
+
+        @media screen and (max-width: 640px) {
+
+            .login-btn>span,
+            .register-btn>span {
+                display: none;
+            }
+
+            .contents {
+                width: 100%;
+
+            }
+        }
     </style>
 
 </head>
@@ -81,14 +150,14 @@
                 </a>
 
                 <div class="location active">
-                    <a href="javascript:void(0);" id="myloc" onclick="gpsLsm(gps_yn);"></a>
+                    <a href="javascript:void(0);" id="myloc" onclick="gpsLsm(gps_yn);">성산로 512-39</a>
                 </div>
 
                 <div class="util-nav">
-                    <a href="/global/login"><span class="login-btn btn">로그인</span>
+                    <a href="/global/login" class="login-btn btn"><span>로그인</span>
                         <i class='bx bxs-user'></i>
                     </a>
-                    <a href="/global/login?L=L"><span>회원가입</span>
+                    <a href="/global/login?L=L" class="register-btn"><span>회원가입</span>
                         <i class='bx bxs-registered'></i>
                     </a>
 
@@ -180,6 +249,97 @@
         <!-- //main 1dep menu -->
     </header>
 
+    <section>
+        <div class="contents">
+            <!-- <div class="content">
+                <img src="" alt="">
+                <div class="caption"></div>
+            </div> -->
+        </div>
+
+    </section>
+    <style>
+        .buttons button {
+            padding: 10px;
+            /*  1. div, span 
+                2. button
+                3. a*
+            */
+        }
+
+        .account-container {
+            position: fixed;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.521);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .buttons>button:hover {
+            background-color: rgb(177, 18, 18);
+        }
+
+        .buttons>button.active {
+            background-color: rgb(177, 18, 18);
+        }
+
+        .account-contents form {
+            display: none;
+        }
+
+        .account-contents form.active {
+            display: block;
+        }
+        #closeForm{
+            font-size:16px;
+            font-weight: bold;
+            text-align: right;
+
+        }
+    </style>
+    <section class="account-container">
+        <div class="account-contents">
+            <div id="closeForm"><i class="bx bx-x"></i></div>
+            <div class="buttons">
+                <button class="btn active">회원로그인</button>
+                <button class="btn">비회원주문</button>
+            </div>
+
+            <form action="" class="login-form active">
+                <h3>로그인</h3>
+                <input type="email" placeholder="id@email.com" class="box">
+                <input type="password" placeholder="비밀번호" class="box">
+
+                <div class="flex">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">로그인상태 유지</label>
+                    <a href="#">비밀번호 찾기</a>
+                </div>
+
+
+                <input type="submit" value="로그인하기" class="btn">
+
+            </form>
+
+            <form action="" class="register-form">
+                <h3>회원가입</h3>
+                <input type="email" placeholder="id@email.com" class="box">
+                <input type="password" placeholder="비밀번호" class="box">
+                <input type="password" placeholder="비밀번호 다시입력" class="box">
+
+                <input type="submit" value="로그인하기" class="btn">
+            </form>
+
+        </div>
+
+    </section>
+
+
     <script>
         const gnbBtn = document.querySelector('.gnb-btn');
         let gnbBtnToggle = false;
@@ -199,6 +359,81 @@
 
     </script>
 
+    <script>
+        const Maybelline_URL = "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline";
+
+        // const removeNew = () => {
+
+        // }
+
+        const createContent = (data, num) => {
+            const content = document.createElement('div');
+            content.classList.add('content');
+            if (num == 5) {
+                content.classList.add("new");
+            }
+
+            const img = document.createElement('img');
+            img.setAttribute('src', data.image_link);
+            img.setAttribute('title', data.description.slice(0, 200));
+
+            const caption = document.createElement('div');
+            caption.classList.add('caption');
+            caption.innerHTML = data.product_link;
+
+            content.append(img);
+            content.append(caption);
+
+            // document.querySelector('.contents').append(content);
+            return content
+
+        }
+
+        const getDatas = async () => {
+            const response = await fetch(Maybelline_URL);
+            const datas = await response.json();
+            // console.log(datas);
+            datas.forEach((data) => {
+                let num = Math.floor(Math.random() * 10);
+                const el = createContent(data, num);
+                document.querySelector('.contents').append(el);
+            })
+
+            // const contents = document.querySelectorAll('.content');
+            // contents.forEach(( content, index )=>{
+            //     const num = Math.floor(Math.random() * 5);
+            //     content.classList.remove('new');
+
+            // })
+        }
+        getDatas();
+    </script>
+
+    <script>
+        const acBtns = document.querySelectorAll('.account-contents .buttons button');
+        const forms = document.querySelectorAll('.account-contents form');
+        acBtns.forEach((btn, index) => { // 0, 1
+            btn.addEventListener('click', () => {
+                btn.classList.add('active');
+                // 0 
+                acBtns[(index + 1) % 2].classList.remove('active');
+
+                forms[index].classList.add('active');
+                forms[(index + 1) % 2].classList.remove('active');
+            })
+        })
+        
+        const closeForm = document.querySelector("#closeForm");
+        // css 규칙은 id 중복 가능한가? 중복불가하므로 굳이 변수를 선언하지 않았다면 직접사용이 가능
+        closeForm.addEventListener('click',()=>{
+            console.log("click");
+        })
+
+        // 여러 개발자가 협업하다 보면 변수명은 중복 가능성이 있고 
+        // 아이디 값을 변수로 선언했다면 더이상 아이디를 변수로 사용하고 
+        // 구조 아이디 값으로 사용할 수 없음
+
+    </script>
 </body>
 
 </html>
