@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/reset.css">
+    <style>
+        fieldset {
+            width: 400px;
+            margin: auto;
+            padding: 20px 50px;
+        }
+
+        legend {
+            padding: 10px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>checkbox</h1>
+    <form action="">
+        <fieldset class="subject">
+            <legend>선택하세요(중복선택가능)</legend>
+            <input type="checkbox" id="all" value="all">
+            <label for="all">all</label>
+            <input type="checkbox" id="html" value="html">
+            <label for="html">HTML</label>
+            <input type="checkbox" id="css" value="css">
+            <label for="css">CSS</label>
+            <input type="checkbox" id="javascript" value="javascript">
+            <label for="javascript">JAVASCRIPT</label>
+            <input type="checkbox" id="react" value="react">
+            <label for="react">REACT</label>
+        </fieldset>
+
+        <div>
+            <input type="submit" value="전송">
+            <input type="reset" value="초기화">
+            <!-- <button>전송</button> -->
+            <!-- span, a를 이용해서 버튼 만들어 사용 -->
+        </div>
+    </form>
+
+    <script>
+        let subjectArray = [];
+
+        document.querySelector('form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            // form의 원래 기능 ; 화면을 갱신
+            // reduce는 누적합계를 구함
+            // let str = subjectArray.reduce((prev, next) => prev.concat(next));
+            
+            // filter는 여려개의 데이터를 배열로 뽑아내고, all 제외하고 싶음 
+            let str = subjectArray.filter((subject)=> subject !== 'all');
+            // map 데이터를 모두 리턴
+            
+            alert(str, "선택하였습니다");
+
+        })
+
+        document.querySelector('form').addEventListener('reset', (event) => {
+            console.log("reset");
+            subjectArray = [];
+            console.log(subjectArray);
+        })
+
+        const subjects = document.querySelectorAll("input[type='checkbox']");
+
+        const checkboxHandle = (boolean) => {
+            subjects.forEach(subject => {
+                subject.checked = boolean;
+            })
+        }
+        const valueHandle = ()=>{
+            subjects.forEach(subject => {
+                if (subject.checked) {
+                    subjectArray.push(subject.value);
+                }
+            })
+        }
+
+        subjects.forEach((subject) => {
+            subject.addEventListener('change', (event) => {
+                if (subject.checked === true && subject.value === 'all') {
+                            checkboxHandle(true);
+                    valueHandle();
+                } else {
+                    checkboxHandle(false);
+                    subjectArray = [];
+                }
+            })
+        })
+
+        // 배열 또는 객체를 사용하여 여러개의 데이터를 선택할 수 있도록 개선
+
+        /* const subjects = document.querySelectorAll('.subject input');
+        subjects.forEach((subject) => {
+            subject.addEventListener('change', () => {
+                const check = subject.checked;
+                //checked 속성은 체크되면 true, false
+                if (check) {
+                    const value = subject.value.toUpperCase();
+                    alert(value);
+                }
+            })
+        }) */
+
+
+        // 선택과목이므로 기본적으로 선택되어 있어야 하는 필수과목 선택되도록
+        // 초기화 함수, 만들어서 바꿔볼 것
+        
+        
+        // 이런 값을 어떻게 표현해야 하는지 확인
+        // todolist => 장바구니
+
+
+    </script>
+</body>
+
+</html>
