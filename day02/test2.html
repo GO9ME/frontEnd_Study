@@ -25,23 +25,27 @@
 </head>
 
 <body>
-    <h1>radio</h1>
+    <h1>checkbox</h1>
     <form action="">
         <fieldset class="subject">
             <legend>선택하세요(중복선택가능)</legend>
-            <input type="radio" id="html" value="html" name="subject">
+            <input type="checkbox" id="all" value="all">
+            <label for="all">all</label>
+            <input type="checkbox" id="html" value="html">
             <label for="html">HTML</label>
-            <input type="radio" id="css" value="css" name="subject">
+            <input type="checkbox" id="css" value="css">
             <label for="css">CSS</label>
-            <input type="radio" id="javascript" value="javascript" name="subject">
+            <input type="checkbox" id="javascript" value="javascript">
             <label for="javascript">JAVASCRIPT</label>
-            <input type="radio" id="react" value="react" name="subject">
+            <input type="checkbox" id="react" value="react">
             <label for="react">REACT</label>
         </fieldset>
 
         <div>
+            <!-- <input type="submit" value="전송"> -->
             <input type="reset" value="초기화">
             <button class="btn">전송</button>
+            <!-- span, a를 이용해서 버튼 만들어 사용 -->
         </div>
     </form>
 
@@ -59,11 +63,13 @@
 
         }
 
+        // setCheckValue('.subject input', []); // 선택하지 않음     
+        // setCheckValue('.subject input', ['html', 'css']); // html css 선택 
         document.querySelector('form').addEventListener('submit', (event) => {
             event.preventDefault(); //bubble
         })
         document.querySelector('.btn').addEventListener('click', () => {
-            const subjects = document.getElementsByName("subject"); // 그룹화한 name을 선택
+            const subjects = document.querySelectorAll(".subject input");
             let str = '';
             subjects.forEach((subject) => {
                 if (subject.checked) {
@@ -85,10 +91,10 @@
         document.querySelector('#all').addEventListener('click', () => {
             const all = document.querySelector("#all");
             if (all.checked) {
-                setCheckValue('.subject input', 'html')
+                setCheckValue('.subject input', ['html', 'css', 'javascript', 'react'])
             } else {
                 setCheckFalse('.subject input');
-
+                
             }
         })
     </script>

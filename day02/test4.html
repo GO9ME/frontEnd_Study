@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/reset.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            font-size: 16px;
+        }
+
+        table th,
+        table td {
+            border: 1px solid black;
+            height: 30px;
+        }
+
+        td:nth-child(1) {
+            text-indent: 1em;
+        }
+
+        td:nth-child(2) {
+            text-align: right;
+            padding-right: 1em;
+        }
+        td:nth-child(3){
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>자동차 견적표</h1>
+    <table>
+        <caption>자동차 견적표</caption>
+        <colgroup>
+            <col width="160px">
+            <col width="160px">
+            <col width="60px">
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="row">옵션</th>
+                <th scope="row">추가가격</th>
+                <th scope="row">선택</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td><label for="opt1">인조가죽시트</label></td>
+                <td>250000</td>
+                <td>
+                    <input type="checkbox" name="opt" id="opt1">
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="opt2">내비게이션</label></td>
+                <td>380000</td>
+                <td>
+                    <input type="checkbox" name="opt" id="opt2">
+                </td>
+            </tr>
+
+            <tr>
+                <td><label for="opt3">썬루프</label></td>
+                <td>580000</td>
+                <td>
+                    <input type="checkbox" name="opt" id="opt3">
+                </td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td>(기본)차량가격</td>
+                <td colspan="2">135000원</td>
+            </tr>
+        </tfoot>
+
+    </table>
+
+</body>
+
+</html>
