@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .product{ display: flex;}
+    .product-name{ width: 150px;
+        white-space: nowrap;
+        text-overflow: ellipsis;  /* ... */
+        overflow: hidden;
+        /* display:block; */
+    }
+    .count{ width: 50px;}
+    .total{ margin-right: 10px; }
+  </style>
+</head>
+<body>
+  <button class="back">뒤로가기</button>
+  <h1>장바구니 총 <span></span> 개</h1>
+  <div>
+      <input type="checkbox" class="all" id="all">
+      <label for="all">모두선택</label>
+      <button class="selectDel">선택삭제</button>
+  </div>
+  <div class="container">
+    <!-- <div class="product">
+        <input type="checkbox">
+        <div class="product-name">항목이름</div>
+        <div class="count"></div>
+        <div class="total"></div>
+        <button class="delBtn">삭제</button>
+    </div> -->
+    
+  </div>
+  <script>
+    const allBtn = document.querySelector('#all');
+    allBtn.addEventListener('change', ()=>{
+        const checkboxs = document.querySelectorAll('.container input[type="checkbox"]');
+
+        if( allBtn.checked )
+            checkboxs.forEach(check=>{
+                check.checked = true; 
+            })
+        else  
+            checkboxs.forEach(check=>{
+              check.checked = false; 
+           })
+    })
+
+    const localStorageHandle = (str)=>{
+        const datas = JSON.parse(localStorage.getItem('product-items')); 
+        const filtered = datas.filter( data=>data.name !== str);
+        localStorage.setItem('product-items', JSON.stringify(filtered));
+    }
+
+    const selectDel = document.querySelector('.selectDel');
+    selectDel.addEventListener('click', ()=>{
+      const checkboxs = document.querySelectorAll('.container input[type="checkbox"]');
+      checkboxs.forEach(check=>{
+          if(check.checked){
+            check.parentElement.remove(); // ui만 지움 
+            const str = check.nextElementSibling.innerHTML;
+            localStorageHandle(str);
+          }
+      })
+    })
+
+
+    document.querySelector('.back').addEventListener('click', ()=>{
+        // location.href = './cardlayout_01.html';
+        /* <a href="경로">*/
+        history.back();
+        // history.forward();
+        // history.go(음수:뒤로가기, 양수:앞으로가기)
+    })
+
+    const createDom = (item)=>{
+        const dom = `
+            <div class="product">
+              <input type="checkbox">
+              <div class="product-name">${item.name}</div>
+              <div class="count">${item.count}</div>
+              <div class="total">${item.total}</div>
+              <button class="delBtn">삭제</button>
+            </div>
+        `
+        return dom;
+    }
+    const getLocalStorage = ()=>{
+
+
+      const response = JSON.parse(localStorage.getItem('product-items'));
+
+      if( response.length === 0 ) alert('장바구니가 비었습니다.');
+      // 
+      document.querySelector('h1>span').innerHTML = response.length ;
+
+      let str = '';
+      response.forEach((item)=>{
+        str += createDom(item); 
+      })
+      document.querySelector('.container').innerHTML = str;
+
+      const delBtns = document.querySelectorAll('.delBtn');
+      delBtns.forEach( delBtn =>{
+          delBtn.addEventListener('click', ()=>{
+            delBtn.parentElement.remove(); // ui만 지움 
+            const str = delBtn.previousElementSibling.previousElementSibling.previousElementSibling.innerHTML;
+            localStorageHandle(str);// 
+          })
+      })
+    }
+
+    getLocalStorage();
+    // 로딩하자마자  데이터 가져와서 출력 
+
+
+  </script>
+</body>
+</html>

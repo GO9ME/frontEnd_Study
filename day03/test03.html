@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const ary = [1,2,3,4,65];
+             //  0 1 2 3 4
+    console.log(ary);
+    delete ary[2];
+    console.log(ary);
+    delete ary[ary.length-1];
+    console.log(ary);
+    // 메모리를 계속 차지 하고 있음 
+
+    const ary1 = [1,2,3,4,65];
+    const filterData = ary1.filter(item => item !== 3 );
+    // 필요한 데이타만 추출, 삭제
+    console.log(filterData)
+  </script>
+</body>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/reset.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        .items-container {
+            display: flex;
+            width: 600px;
+            justify-content: center;
+        }
+
+        .img-box img {
+            width: 100%;
+        }
+
+        .button-box {
+            cursor: pointer;
+        }
+    </style>
+    
+</head>
+<!-- 
+   1. 물건 몇개 살까? #productCount1
+   2. 물건 개수가 정해지면 화면에 가격을 계산 
+   3. 0개를 살 수 없으니 error 표시
+     1 로 변경 => 기본값으로 셋팅하려고 data-value="12500"
+ -->
+
+<body>
+    <div class="addCart-container">
+        <input type="text" value="0"> 개
+        <a href="./goCart.html">장바구니로 가기</a>
+    </div>
+    <div class="items-container">
+        <div class="item-box">
+            <div class="img-box">
+                <img src="./images/img_maxim1.png" alt="">
+            </div>
+            <div class="item-content">
+                <h3>맥심 모카골드 마일드</h3>
+                <div class="box">
+                    <div class="item-price" data-value="12500">
+                        12500
+                    </div>
+                    <input type="number" value="1" min="1" max="10" class="productCount productCount1">
+                </div>
+                <div class="button-box">
+                    <i class='bx bxs-cart'></i>
+                    <span>장바구니</span>
+                </div>
+            </div>
+        </div>
+        <div class="item-box">
+            <div class="img-box">
+                <img src="./images/img_maxim2.png" alt="">
+            </div>
+            <div class="item-content">
+                <h3>맥심 화이트골드</h3>
+                <div class="box">
+                    <div class="item-price" data-value="22500">
+                        22500
+                    </div>
+                    <input type="number" value="1" min="1" max="10" class="productCount productCount2">
+                </div>
+                <div class="button-box">
+                    <i class='bx bxs-cart'></i>
+                    <span>장바구니</span>
+                </div>
+            </div>
+        </div>
+        <div class="item-box">
+            <div class="img-box">
+                <img src="./images/img_maxim3.png" alt="">
+            </div>
+            <div class="item-content">
+                <h3>맥심 오리지날</h3>
+                <div class="box">
+                    <div class="item-price" data-value="15000">
+                        15000
+                    </div>
+                    <input type="number" value="1" min="1" max="10" class="productCount productCount3">
+                </div>
+                <div class="button-box">
+                    <i class='bx bxs-cart'></i>
+                    <span>장바구니</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- <script>
+       const product = {
+            name:'맥심모가골드',
+            count:2,
+            total: 기본값 * count // 숫자 표현 함수 
+       }
+
+       const productItems = [ product, product, product , ... ]
+       // products.length를 화면에 출력
+    </script> -->
+
+    <script>
+        const productItems = [];
+        const buttonBoxs = document.querySelectorAll('.button-box');
+
+        const setLocalStorage = ()=>{
+            localStorage.setItem('product-items', JSON.stringify(productItems));
+        }
+        const currencyHandle = (price)=>{
+            return price.toLocaleString('ko-KR', {
+                currency:'KRW',
+                style:'currency'
+            })
+        }
+        buttonBoxs.forEach(btn=>{
+            btn.addEventListener('click', ()=>{
+                const productName =  btn.previousElementSibling.previousElementSibling.innerHTML;
+
+                const count = btn.previousElementSibling.firstElementChild.nextElementSibling.value;
+                //console.log( count );
+
+                const price = btn.previousElementSibling.firstElementChild.getAttribute('data-value');
+                //console.log( price );
+                // .dataset('value')
+
+                const product = {
+                    name: productName,
+                    count:count,
+                    total: currencyHandle(count * price)
+                }
+                console.log( JSON.stringify(product) );
+
+                //console.log( btn.previousElementSibling.previousElementSibling ); // h3
+                //console.log( btn.parentElement.firstElementChild ); // h3
+                productItems.push( product );
+
+                setLocalStorage(); // localStorage save
+                document.querySelector('.addCart-container input').value = productItems.length;
+            })
+        })
+    </script>
+    <!-- 
+        포트폴리오 설명에 
+        화폐 나타내기 위해서 toLocaleString 로 나타냈다. 
+        intl 클래스 사용법을  아는 것 티내야 함 
+        intl로 처리하였다. 
+     -->
+</body>
+
+</html>

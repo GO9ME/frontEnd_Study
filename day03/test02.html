@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../styles/reset.css">
+  <style>
+
+  </style>
+</head>
+<body>
+   <form id="myForm">
+      <input type="text" placeholder="할일을 입력하세요."
+            id="todo"
+      >
+   </form>
+   <!-- <style>
+      input:checked+label{ text-decoration: line-through;}
+      /* 햄버거 아니콘 제작 */
+   </style> -->
+   <ul class="lists">
+    <!-- 
+      <li>
+        <input type="checkbox" id="list1">
+        <label for="list1">todo</label>
+        <button>X</button>  
+      </li> 
+      // 자식선택자를 이용해서 부모선택를 선택할 수 없음
+      // 동생선택자를 이용해서 형선택자를 선택할 수 없음
+      input+label
+      input~*
+    -->
+   </ul>
+   
+   <script>
+      // const todos = [];
+      let todos = JSON.parse(localStorage.getItem('todos'));
+      // 작업전에 백엔드(fetch.get())
+
+      console.log( todos );
+      myForm.addEventListener('submit', (event)=>{
+        event.preventDefault(); 
+        const mytodo = todo.value;
+        todos.push( mytodo );
+        localStorage.setItem('todos', JSON.stringify(todos));
+        // fetch.post
+        console.log(todos);
+        createTodosDom();
+        todo.value = "";
+      }) 
+
+      const createTodosDom = ()=>{
+          let dom = ''; // 문자열 결합하기 위한 초기화
+
+          // 3개 정도 데이터가 존재 했으므로 에러 없이 실행 가능 했음
+          todos.forEach((todo, index)=>{
+            dom += `
+              <li>
+                <input type="checkbox" id="list${index}">
+                <label for="list${index}">
+                  ${todo}
+                </label>
+                <button>X</button>
+              </li>
+            `
+          })
+
+          document.querySelector('.lists').innerHTML = dom;
+          // createElement => append()
+          // 문자열 편집 => innerHTML
+
+          const checkBoxs = document.querySelectorAll('.lists input');
+          checkBoxs.forEach(checkbox =>{ 
+              console.log(checkbox.nextElementSibling);
+              checkbox.addEventListener('change', ()=>{
+                if(checkbox.checked === true) {
+                  checkbox.nextElementSibling.style.textDecoration = 'line-through';
+                }else{
+                    checkbox.nextElementSibling.style.textDecoration = 'none';
+                }
+              })
+          })
+          
+          const delBtns = document.querySelectorAll('.lists li button');
+          delBtns.forEach((delBtn)=>{
+            delBtn.addEventListener('click', ()=>{
+                console.log(delBtn.parentElement);
+                const deldata = delBtn.previousElementSibling.innerHTML.trim();
+                //console.log( deldata);
+                const filtered = todos.filter(todo=>deldata !== todo);
+                //console.log(filtered);
+                todos = filtered; // 배열복사,
+                localStorage.setItem('todos', JSON.stringify(filtered))
+                delBtn.parentElement.remove();
+                // UI단만 지움, localStorage는 삭제 되지 않음 
+            })
+          })
+      } // createTodosDom_end
+
+      if( todos.length > 0 ) createTodosDom();
+
+      //delete todos[todos.length-1]
+   </script>
+</body>
+</html>

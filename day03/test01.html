@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="get">get</button>
+  <button id="del">delete</button>
+  <script>
+    const datas = [{key:'value'}, {name:'kim'}];
+    localStorage.setItem('my-key', JSON.stringify(datas));
+    // 값저장
+
+    get.addEventListener('click', ()=>{
+      console.log('click');
+      const loadDatas = JSON.parse(localStorage.getItem('my-key'));
+      // 사용할 수 있는 상태로 형변환
+      alert(loadDatas[1].name);
+    })
+
+    del.addEventListener('click', ()=>{
+        localStorage.removeItem('my-key');
+    })
+
+  </script>
+</body>
+</html>

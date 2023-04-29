@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../styles/reset.css">
+<style>
+
+</style>
+</head>
+<body>
+    <div class="currentTime">
+
+    </div>
+    <form id="myForm" action="">
+        <input type="text" placeholder="할일을 입력하세요."
+            id="todo">
+    </form>
+    <!-- <style>
+        input:checked+label{text-decoration: line-through;}
+    </style> -->
+    <ul class="lists">
+        <!-- 
+        <li>
+            <input type="checkbox" id="list1">
+            <label for="list1">todo</label>
+            <button>X</button> 
+        </li>
+        //자식선택자를 선택할수 없음
+        -->
+    </ul>
+    <script>
+        const padStart = (value)=>{
+            const cValue = value.toString();
+            return cValue.padStart(2,'0');
+        }
+        const currentTimeHandle = ()=>{
+            const today = new Date();
+            console.log(today.getFullYear());
+            console.log(today.getHours());
+            console.log(today.getMinutes());
+            console.log(today.getSeconds());
+
+            const time = `
+                ${today.getHours()}:${padStart(today.getMinutes())}:${padStart(today.getSeconds())}
+            `;
+
+            document.querySelector('.currentTime').innerHTML = time;
+        }
+
+        const timer =setInterval(currentTimeHandle, 1000);
+    </script>
+    <script>
+        //const todos = [];
+        let todos = JSON.parse(localStorage.getItem('todos'));
+        //작업전에 백엔드(fetch.get())
+
+        console.log(todos);
+        myForm.addEventListener('submit', (event)=>{
+            event.preventDefault();
+            const myTodo = todo.value;
+            console.log(myTodo);
+            todos.push(myTodo);
+            localStorage.setItem('todos', JSON.stringify(todos));
+            // fetch.post
+            console.log(todos);
+            createTodosDom();
+            todo.value = "";
+        })
+
+        const checkBoxHandle = (checkBox) =>{
+            checkBox.addEventListener('change', ()=>{
+                if(checkBox.checked){
+                checkBox.nextElementSibling.style.textDecoration = 'line-through';
+                }else{
+                    checkBox.nextElementSibling.style.textDecoration = 'none';
+                }
+            })
+        }
+
+        const delBtnHandle = (delBtn)=>{
+            delBtn.addEventListener('click', ()=>{
+                console.log(delBtn.parentElement);
+                const deldata = delBtn.previousElementSibling.innerHTML.trim();
+                console.log(deldata);
+                const filtered = todos.filter(todo=>deldata !== todo);
+                console.log(filtered);
+                todos = filtered;   //배열복사, 
+                // const 주소를 변경할 수 없으므로 덮어쓰기 불가
+                // let 값을 변경가능 하므로 덮어쓰기 위해서 변경
+                localStorage.setItem('todos', JSON.stringify(filtered));
+                delBtn.parentElement.remove();
+                // UI단만 지움 localStorage는 삭제 되지 않음
+            })
+        }
+
+        const createTodosDom = ()=>{
+            let dom = '';   //문자열 결합하기 위한 초기화
+
+            //3개정도 데이터가 존재 했으므로 에러 없이 실행 가능 했음
+            todos.forEach((todo, index)=>{
+                dom += `
+                   <li>
+                        <input type="checkbox" id="list${index}">
+                        <label for="list${index}">
+                            ${todo}
+                        </label>
+                        <button>X</button>
+                    </li>
+                `
+            })
+            document.querySelector('.lists').innerHTML = dom;
+                // createElement => append();
+                // 문자열 편집 => .innerHtml
+
+                const checkBoxs = document.querySelectorAll('.list input');
+                checkBoxs.forEach(checkBox =>{
+                    checkBoxHandle(checkBox);
+                })
+                const delBtns = document.querySelectorAll('.lists li button');
+                delBtns.forEach((delBtn)=>{
+                    delBtnHandle(delBtn);
+                })
+        }
+        if(todos.length > 0){
+            createTodosDom();
+        }
+
+        // delete todos[todos.length - 1]
+    </script>
+</body>
+</html>
