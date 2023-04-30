@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+   <form action="">
+      <input class="search" type="search" placeholder="검색어를 입력하세요.">
+      <input type="submit" value="검색">
+      <div>
+        almay,
+        alva,
+        anna sui,
+        annabelle,
+        benefit,
+      </div>
+
+      <div class="container">
+        <!-- 
+          <div>
+            <div class="content">
+            <img src="" alt="">
+            <h2>brand</h2>
+          </div> 
+      </div>
+      -->
+      </div>
+  </form>
+  <script>
+    let loadDatas = [];
+
+    const filterHandle = (value)=>{ 
+         // loadDatas 데이터 배열에서 같은 값을 찾아서 사용
+         loadDatas.forEach(data=>{
+              console.log( data.brand )
+         })
+
+         //const filtered = loadDatas.filter(data=>data.brand.includes(value))
+    }
+
+  const createDom=(item)=>{
+      let str = `
+        <div class="content">
+          <img src="${item.image_link}" alt="">
+          <h2>${item.brand}</h2>
+        </div>
+      `
+      const div = document.createElement('div');
+      div.innerHTML = str;
+      return div;
+  }
+
+  const loadData = async ()=>{
+      const response = await fetch('./datas/makeup.json');
+      const datas = await response.json();
+      loadDatas = datas;
+      console.log(loadDatas);
+      /*
+      loadDatas.forEach(data=>{
+        if( data.brand === 'annabelle'){
+          // brand명이 null, undefined 라면  false
+          console.log(data);
+        }
+      })
+      const filtered = loadDatas.filter(data=>data.brand === 'Anna sui');
+      console.log(filtered);
+      
+      // str != null && str.includes('almay')
+      // null, undefined 라면 false 처리되서 filter 제외
+      const filtered = loadDatas.filter(data=>data.brand.includes('anna sui'));
+      console.log(filtered);
+      */
+
+      loadDatas.forEach(data=>
+          document.querySelector('.container').append(createDom(data))
+      );
+
+      /*
+      // 화면에 뿌리기 전에 데이터를 아예 검색해서 화면에 다시 뿌림
+      const filtered = loadDatas.filter(data=>data.brand === 'anna sui');
+      console.log(filtered);
+      */
+      // 화면에 뿌려진 내용 중에 검색
+
+  }
+
+  loadData();
+  
+  
+
+    document.querySelector('form').addEventListener('submit', (event)=>{
+      event.preventDefault();
+      const search = document.querySelector('.search');
+      const searchStr = search.value; 
+
+      const doms = document.querySelectorAll('h2');
+      const filtered = doms.map( dom => dom.innerHTML.indexOf(searchStr) > -1 )
+      
+      console.log(filtered);
+      /*
+      filterHandle( search.value );
+      doms.forEach((dom)=>{
+          // console.log(dom)
+          if(dom.getAttribute('data-filter') === search.value){
+              dom.parentElement.style.display = "block";
+          }else{
+              dom.parentElement.style.display = "none";
+          }
+      })
+      */
+  })
+  </script>
+</body>
+</html>

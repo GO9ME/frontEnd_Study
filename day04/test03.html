@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+   <form action="">
+      <input class="search" type="search" placeholder="검색어를 입력하세요.">
+      <input type="submit" value="검색">
+      <div>
+        almay,
+        alva,
+        anna sui,
+        annabelle,
+        benefit,
+      </div>
+  </form>
+  <script>
+    let loadDatas = [];
+
+    const filterHandle = (value)=>{ 
+         // loadDatas 데이터 배열에서 같은 값을 찾아서 사용
+         loadDatas.forEach(data=>{
+              console.log( data.brand )
+         })
+
+         //const filtered = loadDatas.filter(data=>data.brand.includes(value))
+    }
+
+  
+  const loadData = async ()=>{
+      const response = await fetch('./datas/makeup.json');
+      const datas = await response.json();
+      loadDatas = datas;
+      console.log(loadDatas);
+      /*
+      loadDatas.forEach(data=>{
+        if( data.brand === 'annabelle'){
+          // brand명이 null, undefined 라면  false
+          console.log(data);
+        }
+      })
+      const filtered = loadDatas.filter(data=>data.brand === 'Anna sui');
+      console.log(filtered);
+      
+      // str != null && str.includes('almay')
+      // null, undefined 라면 false 처리되서 filter 제외
+      const filtered = loadDatas.filter(data=>data.brand.includes('anna sui'));
+      console.log(filtered);
+      */
+      const filtered = loadDatas.filter(data=>data.brand === 'anna sui');
+      console.log(filtered);
+  }
+
+  loadData();
+  
+  
+
+    document.querySelector('form').addEventListener('submit', (event)=>{
+      event.preventDefault();
+      const search = document.querySelector('.search');
+
+      filterHandle( search.value );
+      /*
+      doms.forEach((dom)=>{
+          // console.log(dom)
+          if(dom.getAttribute('data-filter') === search.value){
+              dom.parentElement.style.display = "block";
+          }else{
+              dom.parentElement.style.display = "none";
+          }
+      })
+      */
+  })
+  </script>
+</body>
+</html>

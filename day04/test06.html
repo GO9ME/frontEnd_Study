@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+   <form action="">
+      <input class="search" type="search" placeholder="검색어를 입력하세요.">
+      <input type="submit" value="검색">
+      <div>
+         brush,  pencil, mascara
+      </div>
+
+      <div class="container">
+        <!-- 
+          <div>
+            <div class="content">
+            <img src="" alt="">
+            <h2>brand</h2>
+          </div> 
+      </div>
+      -->
+      </div>
+  </form>
+  <script>
+    let loadDatas = [];
+
+    const API_URL ='http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline';
+
+    // backend API가 지원 안될때 
+    const filterHandle = (h2s, value)=>{ 
+      h2s.forEach( h2=>{
+        //console.log(h2.innerHTML.includes('brush')) 
+        if(h2.innerHTML.includes(value)){
+          h2.parentElement.style.display = "block";
+        }else{
+          h2.parentElement.style.display = "none";
+        }
+      })
+    }
+
+  const createDom=(item)=>{
+      let str = `
+        <div class="content">
+          <img src="${item.image_link}" alt="">
+          <h2>${item.description}</h2>
+          <h3>${item.product_type}</h3>
+        </div>
+      `
+      const div = document.createElement('div');
+      div.innerHTML = str;
+      return div;
+  }
+
+  const loadData = async ()=>{
+      //const response = await fetch('./datas/makeup.json');
+      const response = await fetch(API_URL);
+      const datas = await response.json();
+      loadDatas = datas;
+      // console.log(loadDatas);
+      
+      loadDatas.forEach(data=>
+          document.querySelector('.container').append(createDom(data))
+      ); 
+  }
+  loadData();
+  
+  document.querySelector('form').addEventListener('submit', (event)=>{
+      event.preventDefault();
+      const search = document.querySelector('.search');
+      const searchStr = search.value; 
+
+      const h2s = document.querySelectorAll('h2');
+      filterHandle(h2s,  searchStr);
+  })
+  </script>
+  <!-- 
+    0. 입력 검색 
+    1. 자동입력 되게 하거나 
+    2. 버튼 클릭시 검색
+    3. 체크버튼 클릭시 검색
+   -->
+</body>
+</html>

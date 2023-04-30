@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const API_URL= 'https://yts.mx/api/v2/list_movies.json';
+
+    let arys = [];
+    async function loadData() { 
+        const response = await fetch(API_URL);
+        const res = await response.json();
+        //arys = res.data.movies;  // 같음 메모리 주소 사용
+        // arys데이터를 변경하면 res.data.movies 데이터도 변경됨
+        /*
+        console.log(res.status); 
+        console.log(res.status_message); 
+        console.log(res.data); 
+        */
+        // console.log( res.data.movies );
+        arys = [...res.data.movies];
+        /*
+        // 2개의 배열이 서로 다른 주소를 가지도록 만듬
+        arys[0] = res.data.movies[0];
+        arys[1] = res.data.movies[1];
+        arys[2] = res.data.movies[2];
+        ...
+        */
+    }
+    loadData();
+  </script>
+  <script>
+    const arys1 = [ 1, 2, 3, 4, 5];
+    const arys2 = arys1;
+    console.log( arys1, arys2 );
+
+    arys1[0] = 'hello';
+    console.log( arys1, arys2 );
+
+    // 데이터 복사 방법, 원본을 수정하지 안전하게 관리 
+    const arys3 = [...arys1]; // for로 일일히 데이터를 복사하기
+    console.log( arys1, arys3 );
+    arys1[1]="string";
+    console.log( arys1, arys3 );
+
+    const user1 = {
+        name : 'kim',
+        age: 30,
+    }
+    const user2 = user1; // 같은 주소를 바라보므로 원본이 깨짐
+    console.log( user1, user2 );
+
+    user1.address = '마포';
+    console.log( user1, user2 );
+    
+    user1['email'] = 'jemicom';
+    console.log( user1, user2 );
+
+    // ... 각각의 값을 for사용 없이 복사해서 사용하도록 함 
+    const user3 = {...user1};
+    console.log( user1, user3 );
+
+    delete user1.address;
+    console.log( user1, user3 );
+
+    for( let a=0; a<=3; a++){
+      user1[`test${a}`] = a;
+      // user1.`test${a}` = a;  // error
+    }
+
+    console.log( user1 );
+  </script>
+</body>
+</html>
+<!-- 
+      라이브러리 : jQuery, swiper.js
+
+      node.js(패키지메니저) 서버를 만들기 
+      node를 사용해서 프론트 
+ -->

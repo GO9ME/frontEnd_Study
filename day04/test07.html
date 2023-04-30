@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .brand-container,
+        .product-Types-container {
+            border: 1px solid black;
+            margin-bottom: 30px;
+        }
+    </style>
+    <!-- 
+        여러줄 감추기
+        display: -webkit-box; 
+        -webkit-line-clamp: 5; 속성은 다섯번째 줄에 생략, 
+        -webkit-box-orient: vertical;  
+     -->
+</head>
+
+<body>
+    <div class="brand-container">
+        <div class="brand">
+            <input type="checkbox" id="maybelline">
+            <label for="maybelline">maybelline</label>
+        </div>
+        <div class="brand">
+            <input type="checkbox" id="almay">
+            <label for="almay">almay</label>
+        </div>
+        <div class="brand">
+            <input type="checkbox" id="physicians formula">
+            <label for="physicians formula">physicians formula</label>
+        </div>
+    </div>
+    <div class="product-Types-container">
+        <div class="product_type">
+            <input type="checkbox" id="blush">
+            <label for="blush">Blush</label>
+        </div>
+        <div class="product_type">
+            <input type="checkbox" id="eyebrow">
+            <label for="eyebrow">Eyebrow</label>
+        </div>
+        <div class="product_type">
+            <input type="checkbox" id="foundation">
+            <label for="foundation">Foundation</label>
+        </div>
+    </div>
+    <div class="product-list-container">
+    </div>
+    <script>
+        let arys = [];
+        async function loadData() {
+            // const url = 'http://makeup-api.herokuapp.com/api/v1/products.json';
+            const response = await fetch('./datas/makeup.json');
+            const res = await response.json();
+            arys = res;
+            // 배열 주소를 그대로 복사하여 사용하므로 const 는 바꿀 수 없는 주소
+            console.log(arys.length);
+             
+            defaultLoaded();            
+        }
+        loadData();
+ 
+        function defaultLoaded(){
+            let str = '';
+            arys.forEach(ary=>{
+                str += creatDom(ary) 
+            })
+            document.querySelector('.product-list-container').innerHTML = str; 
+        }
+        function creatDom(item) {
+            const itemDom = `
+            <div class="product-list-box">
+                <div class="product-img">
+                    <img src="${item.image_link}"  >
+                </div>
+                <h2 class="brand-name">${item.brand}</h2>  
+                <h3 class="product-name">${item.name}</h3> 
+                <h4 class="product-type">${item.product_type}</h4> 
+                <div class="product-price">
+                    <span class="price-sign">
+                        ${item.price_sign ? item.price_sign : "$"}</span>
+                    <span class="price">${item.price}</span>
+                </div> 
+            </div>
+            `
+            return itemDom;
+        }
+    
+    
+        let searchAry = [];
+        const checkboxs = document.querySelectorAll('input[type="checkbox"]');
+
+        // 함수
+        checkboxs.forEach(checkbox=>{
+            // allcheck 해제일때 
+            // defaultLoaded()
+            checkbox.addEventListener('click', (event)=>{
+                // searchAry = [];  //누적 되서 기존의 내용을 지우지 않은 것 처럼 보임
+                let str = '';
+                const keyValue = event.target.getAttribute('id').toLowerCase(); // checkbox#id
+                //console.log( keyValue );
+                const keyName = event.target.parentElement.getAttribute('class').toLowerCase();
+                //console.log( keyName); // brand, product_type
+
+                if( checkbox.checked ){
+                    const filterArys = arys.filter(ary=>ary[`${keyName}`] === keyValue.toLowerCase())
+                    // ary=>ary.product_type
+                    // ary=>ary['product_type']
+                    // ary=>ary.brand
+                    // ary=>ary['brand']
+
+                    console.log( filterArys );
+
+                    searchAry.push( { keyName:keyValue, data:filterArys })
+                }else{
+                    const filterArys = searchAry.filter( ary=> ary.keyName !== keyValue.toLowerCase());
+                    searchAry = [...filterArys];
+                    // 전개연산자(spread operator)
+                }
+
+                searchAry.forEach(ary=>{
+                    ary.data.forEach( data=>
+                    str += creatDom(data))
+                })
+
+                // 기존의 dom을 지우고 새로 씀 
+                document.querySelector('.product-list-container').innerHTML = str; 
+            })
+
+
+        })
+    </script>
+</body>
+
+</html>

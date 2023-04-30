@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+   <form action="">
+      <input class="search" type="search" placeholder="검색어를 입력하세요.">
+      <input type="submit" value="검색">
+      <div>
+        almay,
+        alva,
+        anna sui,
+        annabelle,
+        benefit,
+      </div>
+  </form>
+  <script>
+
+    // http://makeup-api.herokuapp.com/api/v1/products.json
+    // http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline
+    // http://makeup-api.herokuapp.com/api/v1/products.json?brand=covergirl&product_type=lipstick
+
+    const filterHandle = (type, value)=>{ 
+        if( !type || !value )
+          return `http://makeup-api.herokuapp.com/api/v1/products.json`;
+        else  
+          return `http://makeup-api.herokuapp.com/api/v1/products.json?${type}=${value}`;
+    }
+
+    //console.log(filterHandle('brand', 'covergirl'));
+
+    const loadData = async (type, value)=>{
+      const response = await fetch(filterHandle( type, value));
+      const datas = await response.json();
+      console.log(datas);
+  }
+
+  loadData();
+  
+
+    document.querySelector('form').addEventListener('submit', (event)=>{
+      event.preventDefault();
+      const search = document.querySelector('.search');
+
+      console.log(search.value);
+      loadData('brand', search.value);
+      /*
+      doms.forEach((dom)=>{
+          // console.log(dom)
+          if(dom.getAttribute('data-filter') === search.value){
+              dom.parentElement.style.display = "block";
+          }else{
+              dom.parentElement.style.display = "none";
+          }
+      })
+      */
+  })
+  </script>
+  <!-- 
+      node.js 서버를 만들기 
+      node를 사용해서 프론트 
+   -->
+</body>
+</html>
