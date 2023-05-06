@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <form action="">
+      <input class="search" type="search" placeholder="검색어를 입력하세요." />
+      <input type="submit" value="검색" />
+      <div>almay, alva, anna sui, annabelle, benefit,</div>
+    </form>
+
+    <script>
+      // let loadDatas = [];
+      // const loadData = async () => {
+      //   const response = await fetch("./datas/makeup.json");
+      //   const datas = await response.json();
+      //   loadDatas = [...datas];
+
+      // 문제없음
+      /* loadData.forEach((data) => {
+                  if ( data.brand === 'almay') console.log(almay);
+                  // null === 'almay'
+              }); */
+
+      // // javascript : undefined, NaN, null, Infinite
+      // let num;
+      // console.log(num);
+
+      // let num1 = 10;
+      // console.log(typeof num1);
+      // num1 = "hello";
+      // console.log(typeof num1);
+      // console.log(typeof NaN); // number
+      // console.log(typeof null); // 잘못 만들어진 js 문제점
+    </script>
+    <script>
+      let loadDatas = [];
+
+      const filterHandle = (value) => {
+        const filtered = loadDatas.filter(
+          (data) => data.brand !== null && data.brand.includes(value)
+        );
+        console.log(filtered);
+      };
+
+      const loadData = async () => {
+        const response = await fetch("./datas/makeup.json");
+        const datas = await response.json();
+        loadDatas = datas;
+        console.log(loadDatas);
+      };
+
+      loadData();
+
+      //brand = null은 object 타입이므로 includes() 사용할 수 없음
+      const filtered = loadDatas.filter(
+        (data) => data.brand !== null && data.brand.includes("almay")
+      );
+      //데이터 값이 null일때 대비책
+      console.log(filtered);
+      document.querySelector("form").addEventListener("submit", (event) => {
+        event.preventDefault();
+        const search = document.querySelector(".search");
+
+        filterHandle(search.value);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>datalist</title>
+    <!--
+        datalist, select 합성한 작업을 js로 작어배야함
+    -->
+    <style>
+        #details{padding: 10px;}
+        #detail-list{
+            display: none;
+            width: 300px;
+            max-height: 100px;
+            overflow-y: scroll;
+        }
+        .option{
+            line-height:30px; 
+            text-indent: 1rem;
+        }
+        .option:hover{
+            background-color: skyblue;
+        }
+    </style>
+</head>
+<body>
+    <input type="test" id="details" list="detail-list"/>    
+    <div id="detail-list">
+        <div class="option" value="blush">blush</div>
+        <div class="option" value="eyeliner">eyeliner</div>
+        <div class="option" value="foundation">foundation</div>
+        <div class="option" value="lipstick">lipstick</div>
+        <div class="option" value="pensil">pensil</div>
+    </div>
+    <script>
+        const options = document.querySelectorAll('#detail-list .option');
+        console.log(options);
+        details.addEventListener('focus', (event)=>{
+            //console.log(event.target.value);
+            document.querySelector('#detail-list').style.display = 'block';
+        })
+
+        details.addEventListener('input', (event)=>{
+            //console.log(event.target.value);
+            options.forEach((option)=>{
+                if(option.innerHTML.includes(event.target.value)){
+                    option.style.display = 'block';
+                }else{
+                    option.style.display = 'none';
+                }
+            })
+        })
+
+        // details.addEventListener('blur', (event)=>{
+        //     //console.log(event.target.value);
+        //     document.querySelector('#detail-list').style.display = 'none';
+        // }) 밑으로 이동
+
+        // input을 제어함
+        // 일반 글씨 움직이지 말고
+        // 방향키면 배경 색 입히기
+        // enter 데이터 입력
+        let listIndex = -1; // 옵션을 선택하지 않은 상태 , options 인덱스만큼 반복 loop
+        let currentActive = ''; // 현재 선택된 option
+        details.addEventListener('keyup', (event)=>{
+            if(currentActive){
+                currentActive.style.background = 'transparent';
+            }
+
+            console.log(event.keyCode);
+            if( event.keyCode == 40 ){ // 방향키 아래 버튼
+              listIndex++;
+              console.log( listIndex)
+              active(options);
+            }
+            if( event.keyCode == 38 ){ // 방향키 위 버튼
+              listIndex--;
+              active(options);
+              console.log( listIndex)
+            }
+            if( event.keyCode == 13 ){ // enter
+              console.log(  );
+              // 옵션의 값을 출력하기 위함
+            }
+        })
+
+        function active(options){
+            if(!options) return;
+            if(listIndex >= options.length-1) listIndex = 0;
+            if(listIndex < 0 ) listIndex = options.length-1;
+            options[listIndex].style.background = 'skyblue';
+            document.querySelector('#detail-list').scrollTop = listIndex * 30;
+            // scrollTop , option의 line-height 값
+            currentActive = options[listIndex];
+        }
+
+        options.forEach((option)=>{
+            option.addEventListener('click', ()=>{
+                details.value = option.getAttribute('value');
+                //details.value = options.innerHTML;
+                console.log(option.innerHTML);
+                document.querySelector('#detail-list').style.display = 'none';
+                //데이터를 처리한 후 숨김처리
+            })
+        })
+    </script>
+    <!-- 
+        form 태그는 value를 value="blush" 속성값으로 사용함 select는 value속성을 생략하면 텍스트를 value로 사용
+    -->
+</body>
+
+<!-- <script>
+    select.addEventListener('change', (event)=>{
+        console.log(event.target.value);
+    })
+
+    // input을 제어해야함 단점은 디자인하기가 불편함
+    details.addEventListener('input', (event)=>{
+        console.log(event.target.value);
+    })
+</script> -->
+</html>

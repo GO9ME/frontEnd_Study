@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>datalist</title>
+  <!-- 
+    datalist, select 합성한 작업을 js로 작업해야함 
+   -->
+   <style>
+      #details{ padding: 10px;}
+      #detail-list{
+        display:none;  
+        width: 300px;
+        max-height: 100px;
+        overflow-y: scroll;
+      }
+      .option{ 
+          line-height: 30px; 
+          text-indent: 1rem;
+      }
+      .option:hover{
+          background-color: skyblue;
+      }
+
+      /* 스크롤바 디자인 */
+      #detail-list::-webkit-scrollbar{
+        width:10px;
+        background-color: black;
+        /*
+          모든 디자인 삽입
+        */
+        border-radius: 0 10px 10px 0;
+        overflow: hidden;
+      }
+      #detail-list::-webkit-scrollbar-thumb{
+        background-color: red;
+        border-radius: 0 10px 10px 0;
+      }
+   </style>
+</head>
+<body>
+  <input type="text" id="details" list="detail-list">
+  <div id="detail-list">
+    <div class="option" value="blush">blush</div>
+    <div class="option" value="eyeliner">eyeliner</div>
+    <div class="option" value="foundation">foundation</div>
+    <div class="option" value="lipstick">lipstick</div>
+    <div class="option" value="pencil">pencil</div>
+  </div>
+  <!-- browser 해석하는 javascript -->
+  <script>
+      const options = document.querySelectorAll('.option');
+      details.addEventListener('focus', (event)=>{
+        //console.log( event.target.value )
+        document.querySelector('#detail-list').style.display = 'block';
+      })
+
+      details.addEventListener('input', (event)=>{
+        console.log( event.target.value ); 
+        options.forEach((option, index)=>{
+            if(option.innerHTML.includes(event.target.value)){
+              option.style.display = 'block'; 
+            }else{
+              option.style.display = 'none';
+            }
+        })
+      })
+
+      // blur가 먼저되서 데이터를 못가져오므로
+      //details.addEventListener('blur', (event)=>{
+      //  //console.log( event.target.value )
+      //  document.querySelector('#detail-list').style.display = 'none';
+      // })
+      // input을 제어함 
+      // 일반 글씨 움직이지 말고 
+      // 방향키이면 배경그라우색칠하기
+      // enter 데이터 입력
+
+      let listIndex = -1; // 옵션을 선택하지 않은 상태 // options 인덱스만큼 반복 loop
+      let currentActive = ''; // 현재 선택된 option
+      details.addEventListener('keyup', (event)=>{
+        if( currentActive ) {
+            currentActive.style.background = 'transparent';
+        }
+
+        // console.log( event.keyCode ); // 키보드 클릭시 눌러진 키이벤트 값
+        if( event.keyCode == 40 ){ // 방향키 아래 버튼
+          listIndex++;
+          active(options);
+        }
+        if( event.keyCode == 38 ){ // 방향키 위 버튼
+          listIndex--;
+          active(options);
+        }
+        if( event.keyCode == 13 ){ // enter, 클릭했을 때 처리 필요 
+          console.log( options[listIndex].innerHTML );
+          // console.log(option.innerHTML);
+          // 옵션의 값을 출력하기 위함
+          details.value = options[listIndex].innerHTML;
+        }
+      })
+
+      function active(options){
+          if( !options ) return; 
+          if( listIndex >= options.length ) listIndex = 0; 
+          if( listIndex < 0  ) listIndex = options.length - 1; 
+          options[listIndex].style.background = 'skyblue';
+          document.querySelector('#detail-list').scrollTop = listIndex * 30; 
+          // scrollTop  // option의 line-height 값
+          currentActive = options[listIndex];
+      }
+
+      options.forEach((option)=>{
+        option.addEventListener('click', ()=>{
+           details.value = option.getAttribute('value');
+           // details.value = option.innerHTML;
+           console.log(option.innerHTML);
+           document.querySelector('#detail-list').style.display = 'none'; 
+           // 데이터를 처리한 후 숨김
+        })
+      })
+  </script>
+</body> 
+</html>
+<!-- 
+  vscode : terminal 창, ctrl + `
+
+  node : 
+ -->

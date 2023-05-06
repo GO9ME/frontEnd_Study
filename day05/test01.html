@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        option{
+            height: 30px;
+            border: 1px solid orange;
+        }
+        option:hover{
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <input type="text" name="" id="details">
+    <detailist id="detail-list">
+        <option value="blush"></option>
+        <option value="eyeliner"></option>
+        <option value="foundation"></option>
+        <option value="lipstick"></option>
+        <option value="pencil"></option>
+    </detailist>
+
+    <select name="" id="select">
+        <option value="">선택하세요</option>
+        <option value="a">blush</option>
+        <option value="b">eyeliner</option>
+        <option value="c">foundation</option>
+        <option value="d">lipstick</option>
+        <option value="e">pencil</option>
+    </select>
+</body>
+<script>
+    select.addEventListener('change',(event)=>{
+        console.log(event.target.value);
+    })
+
+    details.addEventListener('input',(event)=>{
+        console.log(event.target.value);
+    })
+
+</script>
+</html>

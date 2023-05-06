@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <!-- 
+     https://cdnjs.com/
+   -->
+   <style>
+    .box{ width:200px; height: 200px;
+      background-color: skyblue;
+    }
+   </style>
+</head>
+<body>
+  <button>보임</button>
+  <button>숨김</button>
+  <div class="box"></div>
+  <!-- 
+    jQuery.com : dom 사용법이 편함
+
+    effect method
+    show()/hide()
+    fadeIn()/fadeOut()/fadeTo()/fadeToggle()
+    slideDown()/slideUp()/slideToggle()
+
+    animate() : 별도로 필요한 구현
+
+    forEach() => each() 사용안해도됨  
+   -->
+   <script>
+    //window.addEventListener('DOMContentLoaded', ()=>{})
+    // $(function(){ })
+    // https://api.jquery.com/
+    $('button:nth-child(1)').on('click', function(){
+          $('.box').show();
+    })
+    
+    $('button').eq(1).on('click', function(){
+          $('.box').hide();
+    })
+   </script>
+</body>
+</html>

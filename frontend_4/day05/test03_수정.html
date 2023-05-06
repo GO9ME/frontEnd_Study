@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form action="">
+    <input class="search" type="search" placeholder="검색어를 입력하세요.">
+    <input type="submit" value="검색">
+    <div>
+      almay,
+      alva,
+      anna sui,
+      annabelle,
+      benefit,
+    </div>
+  </form>
+
+  <!-- <script>
+    // javascript : undefined, NaN, null, Infinity
+    let num ; 
+    console.log( num );
+    console.log( typeof num );
+
+    let num1=10;
+    console.log( typeof num1);
+    num1='hello';
+    console.log( typeof num1);
+    console.log( typeof NaN); // number
+    console.log( typeof null); // object 아주 옛날부터 잘못 만들어진 js 문제점 
+    console.log( typeof Infinity);  // 무한대 number
+
+    let arys = [];
+    console.log( typeof arys); // object // 그룹형 데이터
+    const user = {
+      name: 'kim',
+      age:30
+    }
+    console.log( typeof user); // object // 그룹형 데이터
+  </script> -->
+  <script>
+    let loadDatas = [];
+    const loadData = async () => {
+      const response = await fetch('./datas/makeup.json');
+      //  \(백슬래시), 
+      const datas = await response.json();
+      loadDatas = [...datas];
+      //console.log(loadDatas);
+
+      /*
+      // 문제 없는 것처럼 보임
+      loadDatas.forEach((data)=>{
+            // console.log(data.brand)  
+            if( data.brand === 'almay')  console.log( data.brand );
+            //   null      === 'almay'
+      })
+      
+      // 문제가 없는 것 처럼 보임 
+      const filtered = loadDatas.filter( data=>data.brand === 'almay');
+      console.log( filtered );
+      */
+
+      
+    }
+
+    loadData();
+
+    const filterHandle = (searchStr)=>{
+        // brand = null은 object 타입이므로 includes()사용할 수 없다
+        const filtered = loadDatas.filter( data=>data.brand !== null && data.brand.includes( searchStr ));
+        // 데이터 값이 null일때 대비책 
+        console.log( filtered );
+    }
+
+    document.querySelector('form').addEventListener('submit', (event) => {
+      event.preventDefault();
+      const search = document.querySelector('.search');
+      // console.log(search.value);
+      filterHandle(search.value);   
+    })
+
+    // createDom() 이전 작업을 복사해서 만들어서 사용 
+  </script>
+</body>
+
+</html>
