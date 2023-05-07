@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="../styles/reset.css">
+  <!-- <style>
+    .box{ width:200px; height: 200px;
+      background-color: skyblue;
+    }
+  </style> -->
+  <!-- 
+    박스를 rect 이동하게 하기
+   -->
+</head>
+<body>
+   <div class="box"></div>
+   <script src="../script/jquery-3.6.4.js"></script>
+   <!-- 
+      css() : style 설정하는 메서드
+    -->
+   <!-- <script>
+      $('.box').css("width","200px");
+      $('.box').css("height","200px");
+      $('.box').css("backgroundColor","skyblue");
+
+      setTimeout(()=>{
+        $('.box').css("transition","1s");
+        $('.box').css("backgroundColor","red");
+      }, 5000)
+   </script> -->
+   <!-- <script>
+    // chaining 방법
+      $('.box').css("width","200px") 
+              .css("height","200px")
+              .css("backgroundColor","skyblue");
+
+      setTimeout(()=>{
+        $('.box').css("transition","1s").css("backgroundColor","red");
+      }, 5000)
+  </script> -->
+  <script>
+    // 배열식(object) 표현식
+      $('.box').css({
+          "width" : "200px",
+          "height" : "200px",
+          "backgroundColor" : "skyblue"
+      });
+
+      setTimeout(()=>{
+          $('.box').css({
+              "transition":"1s",
+              "backgroundColor" : "red"
+          });
+      }, 3000);
+  </script>
+</body>
+</html>
+
+<!-- 
+  pagenation : 1번이상 사용할 일 있음 
+  jQuery : 메인 페이지 만들기 
+  node서버 : url 만들기 작업
+ -->

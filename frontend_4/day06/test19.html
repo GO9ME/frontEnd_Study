@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>보임/숨김</title>
+  <link rel="stylesheet" href="../styles/reset.css">
+  <style>
+      /* 더 이쁘게 하는 것은 예전 했고 여러분이 하면됨 */
+       .tab-container{ width: 500px; 
+          margin:100px; 
+       }
+       .tab-btns{ display: flex;}
+       .tab-btns a{ display: block; 
+              padding:10px; 
+       }
+      .tab-contents{ 
+        display: flex;
+      }
+  </style>
+  <!-- 
+    보임/숨김
+    display:block, inline, flex, inline-block |none;
+    opacity: 1 | 0;
+    width, height
+   -->
+</head>
+<body>
+  <div class="tab-container">
+    <ul class="tab-btns">
+      <li><a href="#">btn01</a></li>
+      <li><a href="#">btn02</a></li>
+      <li><a href="#">btn03</a></li>
+    </ul>
+    <div class="tab-contents">
+      <div class="content">
+        0 Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolor maiores non! Iure, iusto nihil repudiandae distinctio odit eligendi consectetur, corporis vel voluptate nemo aliquid quibusdam in delectus? Facere, id.
+      </div>
+      <div class="content">
+        1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolor maiores non! Iure, iusto nihil repudiandae distinctio odit eligendi consectetur, corporis vel voluptate nemo aliquid quibusdam in delectus? Facere, id.
+      </div>
+      <div class="content">
+        2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur dolor maiores non! Iure, iusto nihil repudiandae distinctio odit eligendi consectetur, corporis vel voluptate nemo aliquid quibusdam in delectus? Facere, id.
+      </div>
+    </div>
+  </div>
+  <script src="../script/jquery-3.6.4.js"></script>
+  <script>
+      $('.tab-contents').hide(); 
+      $('.tab-btns a').on('mouseover', function(event){
+          event.preventDefault(); 
+          let index = $(this).parent().index(); 
+          $('.tab-contents').stop().slideDown();
+      }) 
+      $('.tab-btns').on('mouseout', function(){
+          $('.tab-contents').stop().slideUp();
+      })
+  </script> 
+  <!-- 
+    jQuery effect method 큐 : 애니메이션이 실행되는 메모리 사용 
+    큐 : last input last output (LILO);
+    즉시 실행(애니메이션 지우기)
+    transitionend => stop() : 큐메모리의 애니메이션을 지우기
+    animationend
+   -->
+</body>
+</html>

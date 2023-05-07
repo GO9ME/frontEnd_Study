@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>보임/숨김</title>
+  <link rel="stylesheet" href="../styles/reset.css">
+  <style>
+      .box{ width:200px; height: 200px;
+        background-color: skyblue;
+      }
+      button{
+        padding: 20px;
+      }
+  </style>
+  <!-- 
+    보임/숨김
+    display:block, inline, flex, inline-block |none;
+    opacity: 1 | 0;
+    width, height
+   -->
+</head>
+<body>
+  <button class="show">show</button>
+  <button class="hide">hide</button>
+  <button class="toggle">toggle</button>
+  <div class="box"></div>
+  <script src="../script/jquery-3.6.4.js"></script>
+  <!-- jQuery라이브러리를 사용한 또다른 라이브러리는 jQuery로드 후 로드 -->
+  <script>
+      // effect mothod 
+      // fadeIn()/fadeOut() : 내부에 tranisition, animation
+      // css에 transition, animation이 중복 되면 오류발생 
+      // opacity 속성
+      $('.box').hide();
+      $('.show').on('click', function(event){
+        // this 사용하면 되서  event 사용할 일이 드뭄
+          $('.box').fadeIn(2000);
+      })
+      $('.hide').on('click', function(event){ 
+          $('.box').fadeOut("slow");
+      })
+      $('.toggle').on('click', function(event){ 
+          $('.box').fadeToggle( 2000 );
+      })
+  </script>
+  <!-- 
+      effect mothod
+      파라미터 : duration
+      기본 시간이 400
+      "fast" : 200
+      "slow" : 600
+      1s = 1000
+      5s = 5000
+   -->
+</body>
+</html>

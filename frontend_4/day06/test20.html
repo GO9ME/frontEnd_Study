@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>보임/숨김</title>
+  <link rel="stylesheet" href="../styles/reset.css">
+  <style>
+    .box{ width:200px; height: 200px;
+      background-color: skyblue;
+    }
+  </style>
+  <!-- 
+    보임/숨김
+    display:block, inline, flex, inline-block |none;
+    opacity: 1 | 0;
+    width, height
+   -->
+</head>
+<body>
+   <div class="box"></div>
+   <script src="../script/jquery-3.6.4.js"></script>
+   <script>
+    const effect = { 
+      width : '50px', 
+      height : '50px',
+      'background-color' :'red',
+      backgroundColor : 'blue'
+    }
+    $('.box').on('click', function(){
+        //$('.box').animate()
+        $(this).animate(effect, 1000, "linear", function(){
+              $('.box').css("backgroundColor" , "blue");
+        })
+    })
+   </script>
+   <!-- 
+        $(this).animate({object},duration,ease,callback)
+        object : css 속성이 숫자로 된 값만 애니 가능
+        css : font-size, margin, padding, line-height.. 
+
+        duration : 초당 인터벌 1000, 기본 400
+        ease : "swing" | "linear"
+
+        callback : 어떤일이 끝난 후 처리할 일
+    -->
+</body>
+</html>
