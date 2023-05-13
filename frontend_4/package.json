@@ -10,7 +10,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "-": "^0.0.1",
+    "D": "^1.0.0",
     "data-fns": "^1.1.0",
-    "date-fns": "^2.30.0"
+    "date-fns": "^2.30.0",
+    "g": "^2.0.1",
+    "nodemon": "^2.0.22"
   }
 }
