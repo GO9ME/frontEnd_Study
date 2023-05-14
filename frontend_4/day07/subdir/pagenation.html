@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>데이터를 분리해서 표현하기</h1>
+    <!-- 총 페이지 수 : 데이터량에 따라 달라짐
+                    화면에 표시할 수 있는 개수
+    pager : 동적으로 만들어짐
+    1,2,3, => 화면에 표시되는 데이터 결정
+    
+    총 표시 개수 : 5
+    0~4 5~9
+            -->
+    <ul class="pager-container">
+        <!-- 총페이지 수에 따른 li 추가 -->
+    </ul>
+
+    <script>
+        const ary = [];
+        for (let a = 1; a <= 22; a++) {
+            ary.push(a);
+        }
+        //console.log(ary.length);
+
+        let pagePerCount = 10;   // 한 화면당 표시 개수
+        let pagers = Math.ceil(ary.length / pagePerCount);
+        let currentPage = 1;
+        let endIndex = pagePerCount * currentPage;
+        let startIndex = endIndex - pagePerCount;
+
+        for (let a = 1; a <= pagers; a++) {
+            let li = document.createElement('li');
+            li.classList.add('list');
+            li.innerHTML = a;
+            document.querySelector('.pager-container').append(li);
+        
+            li.addEventListener('click',()=>{
+                currentPage = a;
+                endIndex = pagePerCount * currentPage;
+                startIndex = endIndex - pagePerCount;
+
+                console.log(startIndex, endIndex);
+                console.log(ary.slice(startIndex, endIndex))
+            })
+        }
+
+
+    </script>
+    <!-- 한가지 방법 : front에서 모두 가져와서 위코드를 사용
+    2. 백엔드에서 pager를 전달받아서 전달받은 정보를 이용 
+    -->
+
+</body>
+
+</html>
