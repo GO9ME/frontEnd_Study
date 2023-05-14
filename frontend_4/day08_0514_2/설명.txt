@@ -1,0 +1,22 @@
+0. git-scm 설치
+
+1. node 확인 
+$ node --version
+v18.16.0
+
+2. js 실행환경
+$ node 파일명.js
+
+3. 패키지 메니져 역활
+$ npm  i  모듈명
+$ npm  i -g nomdemon
+$ npm  i -D nomdemon
+$ npm  uninstall nomdemon
+
+4. 폴더 위치 : 실행할 파일의 위치까지 찾아가기
+$ cd d:
+$ cd frontend_4
+$ cd day07_0513
+$ node server04
+
+5. 오타

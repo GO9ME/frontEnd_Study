@@ -1,0 +1,26 @@
+[
+   {
+      "name": "kim",
+      "addr": "마포"
+   },
+   {
+      "name": "park",
+      "addr": "서대문"
+   },
+   {
+      "name": "you",
+      "addr": "중구"
+   },
+   {
+      "name": "lee",
+      "addr": "서초"
+   },
+   {
+      "name": "html",
+      "addr": "신촌"
+   },
+   {
+      "name": "css",
+      "addr": "합정"
+   }
+]

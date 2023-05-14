@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>
+     
+      // front <-> back 
+      // RESTfull API( CRUD : Create, Read, Update, Delete, )
+      // 회원가입, 주문 생성 : create(post)
+      // 회원정보수정, 주문개수수정 : update( put, petch )
+      // 회원탈퇴, 주문취소 : delete ( delete )
+      // 회원정보확인, 주문내용확인 : read 보기( get )
+  
+  </div>
+    <!-- <script>
+      // url : 회원가입, 주문정보
+      // read 
+      fetch( url )
+      .then( res => res.json )
+      .then( res=> console.log( res.length ))
+
+      // create
+      fetch( url , {
+        method: "POST",
+        body: JSON.stringify({ id, name, email, phone }),
+        headers:{
+          'Content-Type' : 'appliction/json;charset=UTF-8'
+        }
+      })
+      .then( res => res.json )
+      .then( res=> console.log( res.length ))
+
+      // update
+      fetch( url , {
+        method: "PUT",
+        body: JSON.stringify({ id, name, email, phone }),
+        headers:{
+          'Content-Type' : 'appliction/json;charset=UTF-8'
+        }
+      })
+      .then( res => res.json )
+      .then( res=> console.log( res.length ))
+
+      // delete
+      fetch( url/id , {
+        method: "DELETE", 
+      })
+      .then( res => res.json )
+      .then( res=> console.log( res.length ))
+    </script> -->
+
+    <script>
+      const todos_url = 'https://jsonplaceholder.typicode.com/users/1/todos';
+
+      fetch(todos_url)
+      .then(res=>res.json())
+      .then(res=>console.log(res.length))
+
+      const del_url = 'https://jsonplaceholder.typicode.com/posts/1' 
+      
+      fetch(del_url, {
+          method:'DELETE'
+      }).then(res=>res.json())
+      .then(res=>console.log(res));
+      // 삭제되었는지 아닌지 정보 가져온다
+       
+      const CREATE_url = 'https://jsonplaceholder.typicode.com/users/1/todos' 
+      
+      fetch(CREATE_url, {
+          method:'POST', 
+          body: JSON.stringify({
+                id: 555,
+                title: '아무거나',
+                complete : false
+          }),
+          headers:{
+            'Content-Type' : 'appliction/json;charset=UTF-8'
+          }
+      }).then(res=>res.json())
+      .then(res=>console.log(res));
+      // 회원가입을 하거나 주문이 되었다면 메시지 출력
+       
+      // 수정된 정보
+      fetch(CREATE_url, {
+          method:'PUT', 
+          body: JSON.stringify({
+                id: 2,
+                title: '아무거나',
+                complete : true
+          }),
+          headers:{
+            'Content-Type' : 'appliction/json;charset=UTF-8'
+          }
+      }).then(res=>res.json())
+      .then(res=>console.log(res))
+      // 수정되었는지 에러인지 정보 발송
+       
+    </script>
+</body>
+</html>

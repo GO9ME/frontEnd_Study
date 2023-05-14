@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>pagenation</title>
+</head>
+<body>
+  <h1>데이터를 분리해서 표현하기</h1>
+  <ul class="pager-container">
+    <!-- 총페이지 수에 따른 li 추가 -->
+  </ul>
+  <!-- 
+      총 페이지 수 : 데이터량에 따라서 달라짐 
+                    화면에 표시할 수 있는 개수 
+      pager : 동적으로 만들어짐 
+      1, 2, 3, => 화면에 표시되는 데이터 결정
+
+      총표시 개수 : 5
+      0~4, 5~9
+   -->
+
+   <script>
+      const ary = [];
+      for( let a = 1; a<=22 ; a++){
+          ary.push(a);
+      }
+      
+      let pagePerCount = 10; // 한화면당 표시 개수
+      let pagers = Math.ceil(ary.length / pagePerCount); // 20/5 => 2를 표시하기 위해서
+      let currentPage = 1; 
+      let endIndex = pagePerCount * currentPage;
+      let startIndex = endIndex - pagePerCount;
+
+      for( let a = 1; a<= pagers ; a++ ){
+          let li = document.createElement('li');
+          li.classList.add('list');
+          li.innerHTML = a; 
+          document.querySelector('.pager-container').append(li);
+
+          li.addEventListener('click', ()=>{
+              currentPage = a; // 현재 클릭한 번호 백업
+              endIndex = pagePerCount * currentPage;
+              startIndex = endIndex - pagePerCount;
+
+              console.log( startIndex,  endIndex );
+              console.log( ary.slice( startIndex, endIndex ))
+          })
+      }
+   </script>
+   <!-- 
+      1.  front에서 모두 가져와서 위코드를 사용할 수도 있고 
+      2.  backend에서 pager를 전달 받아서 전달은 데이타만 넘기기
+      3.  slider 고친거 올려드릴께요. 
+    -->
+</body>
+</html>

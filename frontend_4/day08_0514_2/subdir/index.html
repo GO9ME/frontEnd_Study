@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1> subdir/index.html </h1>
+  <div>
+      <button class="users">users</button>
+  </div>
+  <div>
+      <input type="text" placeholder="이름을 입력하세요" id="username">
+      <button class="user">user</button>
+  </div>
+
+  <div>
+    <input type="text" placeholder="이름을 입력하세요."  id="newname">
+    <input type="text" placeholder="주소을 입력하세요."  id="newaddr">
+    <button class="newUser">사용자등록</button>
+  </div>
+  <script>
+      // fetch => $.ajax()
+      document.querySelector('.users').addEventListener('click', async ()=>{
+         const content = await fetch('http://localhost:3000/users');
+         const users = await content.json();  // promise 처리 
+         console.log(users);
+         /*
+         fetch('http://localhost:3000/users')
+         .then( res => res.json() )
+         .then( res=>console.log(res))
+         */
+      })
+  </script>
+  
+  <script>
+    // delete도 아래와 같이 처리 할 수 있음 
+      document.querySelector('.user').addEventListener('click', async ()=>{
+         // get, 필요한 데이터만 검색 
+         const content = await fetch(`http://localhost:3000/users/name=${username.value}`);
+         const users = await content.json();   
+         console.log(users);
+      })
+  </script>
+  
+  <script>
+      document.querySelector('.newUser').addEventListener('click', ()=>{
+            /*
+            const newUser = {
+                  name : newname.value,
+                  addr : newaddr.value
+            }
+            */
+           const name = newname.value;
+           const addr = newaddr.value;
+           const newuser = { name, addr }
+
+           console.log( JSON.stringify(newuser) )
+           
+           fetch('http://localhost:3000/user/name', {
+              method : 'POST',
+              body: JSON.stringify( newuser ),
+              headers : {
+                'Content-Type' : 'appliction/json;charset=UTF-8'
+              }
+           })
+           .then( res=>res.json())
+           .then( res => console.log( res ))
+      })
+  </script>
+
+  <!-- <script>
+    let urlstr = 'localhost:3000/users/name=kim';
+    const urlAry = urlstr.split('/');
+    // 지정한 문자열을 기준으로 문자열 분리 
+    console.log( urlAry ); 
+    // ['localhost:3000', 'users', 'name=kim']
+
+    console.log( urlAry[urlAry.length - 1]);
+
+    const ary = [1,2];
+    ary.push( 3 )
+    console.log( ary );
+    // 원소형 데이타 
+    // 숫자, 문자, 
+    // 객체형데이타(reperance, pointer)
+  </script> -->
+</body>
+</html>
