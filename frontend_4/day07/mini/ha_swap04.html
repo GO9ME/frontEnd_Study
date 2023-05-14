@@ -191,14 +191,15 @@
     let currentImg = $('.mainimg img:nth-child(1)');
     let leftMove = 0; 
     let currentMove = 1; 
-    const imgMoveHandle = (currentMove)=>{
+
+    
+    const imgMoveHandle = ()=>{ // 파라미터
       $('.change img').eq(leftMove).stop()
             .animate({left:'-100%'}, 400, 'linear', function(){
                   $(this).css('left', '100%')
             }); // 0, 1, 2
       $('.change img').eq(currentMove%3).stop().animate({left:0}, 400, 'linear', function(){
             leftMove = currentMove%3; 
-            currentMove++; // 자동으로 돌릴때 
       }); // 1, 2, 0
     }
 
@@ -210,17 +211,17 @@
         }
         
         currentMove = $(this).index();
-        imgMoveHandle(currentMove);
+        imgMoveHandle();
     })
-    
+
     let timer ;
     $('.mainimg ul li').on('mouseout', function(){
         timerToggle = false;
-        if( !timerToggle ){
+        /*if( !timerToggle ){
           timer = setInterval(()=>{
             imgMoveHandle(currentMove);
           }, 3000)
-        }
+       } */
     })
     
 
@@ -228,11 +229,13 @@
     // 0 이미지를 표시
 
     
-    if( !timerToggle ){
-        timer = setInterval(()=>{
-          imgMoveHandle(currentMove);
-        }, 3000)
-    }
+    timer = setInterval(()=>{
+      if( !timerToggle ){
+        imgMoveHandle();
+      }
+
+      currentMove++; // 자동으로 돌릴때 
+    }, 2000)
 </script>
 
 </body>

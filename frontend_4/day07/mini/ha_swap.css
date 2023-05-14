@@ -96,6 +96,8 @@ header .search #textfield {
 .mainimgbg .mainimg .change {
 	width: 755px;
 	height: 360px;
+	overflow: hidden;
+	/* 작업이 완료된 후 주석 해제 */
 	float: left;
 }
 
