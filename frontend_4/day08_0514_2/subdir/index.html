@@ -20,7 +20,22 @@
     <input type="text" placeholder="이름을 입력하세요."  id="newname">
     <input type="text" placeholder="주소을 입력하세요."  id="newaddr">
     <button class="newUser">사용자등록</button>
+    <div class="logCreate"></div>
   </div>
+
+  <div>
+    <input type="text" placeholder="이름을 입력하세요."  id="delname"> 
+    <button class="delUser">사용자삭제</button>
+    <div class="logDelete"></div>
+  </div>
+
+  <div>
+    <input type="text" placeholder="이름을 입력하세요."  id="uname">
+    <input type="text" placeholder="주소을 입력하세요."  id="uaddr">
+    <button class="updateUser">수정</button>
+    <div class="logUpdate"></div>
+  </div>
+
   <script>
       // fetch => $.ajax()
       document.querySelector('.users').addEventListener('click', async ()=>{
@@ -67,10 +82,68 @@
               }
            })
            .then( res=>res.json())
-           .then( res => console.log( res ))
+           .then( res => {
+                let  logCreate = document.querySelector('.logCreate');
+                logCreate.innerHTML = `
+                    <div>등록 상태 : ${res.success}</div>
+                    <div> ${res.message}</div>
+                    <div> ${res.data.name}, ${res.data.addr}</div>
+                `
+           })
       })
   </script>
 
+  <script>
+    // delete 
+    const delUser = document.querySelector('.delUser');
+    delUser.addEventListener('click', ()=>{
+        const delValue = delname.value;
+
+        fetch(`http://localhost:3000/users/name=${delValue}`, {
+          method : 'DELETE',
+          headers : {
+            'Content-Type' : 'appliction/json;charset=UTF-8'
+          }
+          // DELETE는 BODY 없음
+        }).then(res=>res.json())
+        .then(res=>{
+          let  logDelete = document.querySelector('.logDelete');
+          logDelete.innerHTML = `
+              <div>등록 상태 : ${res.success}</div>
+              <div> ${res.message}</div>
+              <div> ${res.data}</div>
+          `
+        })
+    })
+  </script>
+
+  <script>
+    //  
+    const updateUser = document.querySelector('.updateUser');
+    updateUser.addEventListener('click', ()=>{
+        const updatename = uname.value;
+        const updateaddr = uaddr.value;
+
+        fetch(`http://localhost:3000/user/name`, {
+          method : 'PUT',
+          headers : {
+            'Content-Type' : 'appliction/json;charset=UTF-8'
+          },
+          body: JSON.stringify({
+                name : updatename,
+                addr : updateaddr
+          }) 
+        }).then(res=>res.json())
+        .then(res=>{
+          let  logUpdate = document.querySelector('.logUpdate');
+          logUpdate.innerHTML = `
+              <div>등록 상태 : ${res.success}</div>
+              <div> ${res.message}</div>
+              <div> ${res.data.name}</div>
+          `
+        })
+    })
+  </script>
   <!-- <script>
     let urlstr = 'localhost:3000/users/name=kim';
     const urlAry = urlstr.split('/');

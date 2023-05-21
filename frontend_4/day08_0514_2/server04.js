@@ -7,6 +7,7 @@ const path = require('path');
 
 const server = http.createServer();
 
+// 라우터 : url 주소를 지정하는 방식
 server.on('request', async (req, res)=>{
   let filePath = path.join(__dirname, 'mini', req.url === '/' ? 'ha_swap.html' : req.url);
   // localhost:3000
@@ -33,20 +34,25 @@ server.on('request', async (req, res)=>{
       if( req.url === '/' &&  req.method === 'GET'){
          content = await fsPromises.readFile(path.join(__dirname, 'mini', 'ha_swap04.html') ); 
          //content = await fs.readFileSync(path.join(__dirname, 'mini', 'ha_swap.html') ); 
+         res.end( content );
 
       }else if( req.url.includes('css') &&  req.method === 'GET'){
          content = await fsPromises.readFile(path.join(__dirname, 'mini', 'ha_swap.css') ); 
+         res.end( content );
 
       }else if( req.url.includes('js') &&  req.method === 'GET'){
-         content = await fsPromises.readFile(path.join(__dirname, "../script/jquery-3.6.4.min.js") ); 
+         content = await fsPromises.readFile(path.join(__dirname, "../public/script/jquery-3.6.4.min.js") ); 
+         res.end( content );
 
       }else if( extname.includes('jpg') || extname.includes('png') || extname.includes('gif')){
         // 이미지 다양하게 처리하기
          content = fs.readFileSync(filePath); 
+         res.end( content );
 
       // localhost:3000/subdir   
       }else if( req.url==='/subdir' && req.method === 'GET' ){
-         content = fs.readFileSync(path.join(__dirname, 'subdir', 'index.html'))
+        content = fs.readFileSync(path.join(__dirname, 'subdir', 'index.html'))
+        res.end( content );
 
        // localhost:3000/user
       }else if( req.url === '/user' &&  req.method === 'GET'){
@@ -55,13 +61,17 @@ server.on('request', async (req, res)=>{
               phone : '010'
          }]
          content = JSON.stringify(user);
+         res.end( content );
 
       // loaclhost:3000/users   
       }else if( req.url === '/users' &&  req.method === 'GET' ){
          const response = fs.readFileSync(path.join(__dirname, 'data', 'data.json' ), "utf-8");
          content = response;
+         res.end( content );
         // 
-        // localhost:3000/users/name='kim'  
+        // localhost:3000/users/name='kim' 
+        // localhost:3000/name='kim' 
+        // localhost:3000/product/name='kim' 
         // 파라미터 값 찾기
      }else if( req.url.includes('name') &&  req.method === 'GET' ){
         content = fs.readFileSync(path.join(__dirname, 'data', 'data.json' ), "utf-8"); 
@@ -74,6 +84,7 @@ server.on('request', async (req, res)=>{
         const find = rawData.find( user=> user.name === name)
 
         content =  JSON.stringify(find) ; 
+        res.end( content );
 
     // post, delete, put, petch
     // localhost:3000/users/name
@@ -83,7 +94,11 @@ server.on('request', async (req, res)=>{
               "addr":"합정"
           }
     */
-     // create : 중복된 데이터가 있는지 확인 
+     // create : 중복된 데이터가 있는지 확인
+     // 생성 : body, head 데이터를 넘김 => Postman, thunder Client
+     // localhost:3000/name
+     // localhost:3000/user/name
+     // localhost:3000/name/user
      }else if( req.url.includes('name') &&  req.method === 'POST' ){
           let body = ''; // req.body
 
@@ -112,13 +127,16 @@ server.on('request', async (req, res)=>{
                   }
               )
 
-              content = { 
+              content = JSON.stringify({ 
                 success : 'ok', 
                 message : '정상 등록 되었습니다.', 
-                data : newUser
-              }
+                data : newUser  /// newUser
+              })
+              res.write( content );
+              res.end( );
+              // write()=>end()
           })
-
+          
      // 입력된 이름 지우기 
      // http://localhost:3000/users/name=html
      // post 방식처럼 처리해야 함  : 눈에 안보이니 get방식처럼 처리 
@@ -146,7 +164,7 @@ server.on('request', async (req, res)=>{
             data : name
           })
 
-
+          res.end(content);
      //  http://localhost:3000/name    
      /*
           {
@@ -195,7 +213,7 @@ server.on('request', async (req, res)=>{
 
      }
 
-      res.end( content ); ///
+    // res.end( content ); ///
   }catch(err){
      console.log(err)
   }
