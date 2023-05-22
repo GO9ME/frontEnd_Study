@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <!-- <script src="./test01_sort.js"></script> -->
+  <script>
+    const animal = [
+      { id: 50, name: '곰'},
+      { id: 1, name: '호랑이'},
+      { id: 34, name: '사자'},
+      { id: 23, name: '여우'},
+      { id: 101, name: '기린'}
+    ]
+    const animal1 = { id: 1, name: '호랑이'};
+    const copy1 = animal1; 
+    console.log('animal1 === copy1 : ', animal1 === copy1);
+    copy1.name = '사자'
+
+    console.log( animal1);
+    console.log( copy1);
+
+    let copy3 = {}
+    copy3.id = animal1.id; 
+    copy3.name = animal1.name; 
+
+    const copy2 = {...animal1}
+    console.log('animal1 === copy2 : ', animal1 === copy2);
+    copy2.name = '호랑이'
+
+    console.log( animal1);
+    console.log( copy2);
+
+    // key 값을 순회하기 위한  for~in
+    for( key in animal1){
+        console.log( key )
+    }
+
+    let copy4 = {}
+    for( key in animal1){
+      //copy4.key = animal1.key; 
+      copy4[key] = animal1[key];
+    }
+    console.log('animal1 === copy4 : ', animal1 === copy4);
+    copy4.name = '호랑이'
+
+    console.log( animal1);
+    console.log( copy4);
+  </script>
+</body>
+</html>

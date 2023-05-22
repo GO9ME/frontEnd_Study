@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="../public/styles/reset.css">
+  <link rel="stylesheet" href="../public/styles/board.css">
+</head>
+
+<body>
+  <!-- 화면에 기본적으로 보일 페이지 개수를 지정하기 위함  -->
+  <select name="select" id="select">
+    <option value="5">5</option>
+    <option value="7">7</option>
+    <option value="10">10</option>
+    <option value="15">15</option>
+  </select>
+
+  <div class="search-box">
+    <input type="search" id="search">
+    <button class="searchBtn">검색</button>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>myid</th>
+          <th>id</th>
+          <th>title</th>
+          <th>small_cover_image</th>
+          <th>year</th>
+          <th>rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <tr>
+          <td>myid</td>
+          <td>id</td>
+          <td>title</td>
+          <td>small_cover_image</td>
+          <td>year</td>
+          <td>rating</td>
+        </tr> -->
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination-container">
+    <div id="prev">prev</div>
+    <ul class="pagination">
+      <!-- <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li> -->
+    </ul>
+    <div id="next">next</div>
+  </div>
+
+  <script>
+    // https://yts.mx/api/v2/list_movies.json
+    let movies = [];
+    let searchMovies = [];
+    let pagePerCount = select.value; // select의 기본값 가져오기 
+    let pagers = Math.ceil(movies.length / pagePerCount);
+    // 7, 7, 6 // 15, 5
+    let currentPage = 1;
+    let lastIndex = currentPage * pagePerCount; //
+    // 7개씩 표시 
+    // 1 = 1 * 7
+    // 2 = 2 * 7
+    // 3 = 3 * 7 : 21 - 7 ; 15~21 ( 21, 20 )
+    // 1 = 1 * 15 : 1 - 15 ;  
+    // 2 = 2 * 15 : 16 - 30 ; ( 30, 20 )
+    let startIndex = lastIndex - pagePerCount; 
+
+    function calculater(movies) {
+      pagers = Math.ceil(movies.length / pagePerCount);
+      lastIndex = currentPage * pagePerCount;
+      startIndex = lastIndex - pagePerCount;
+    }
+
+    const loadData = async () => {
+      const res = await fetch('https://yts.mx/api/v2/list_movies.json');
+      const datas = await res.json();
+      ///movies = datas; 
+      /// 확인하기 편한  id 생성 
+      const iddata = datas.data.movies;
+
+      iddata.forEach((data, index) => {
+        const mydata = { myid: index + 1, ...data };
+        // console.log(mydata);
+        movies[index] = { ...mydata };
+        // 기존의 데이터 속성을 모두 가지고 있으면 새로운 속성 추가 
+      })
+
+      // sort 사용 번호를 역순으로 보기만 필요 
+      movies.reverse();
+      console.log(movies.length);
+
+      calculater([...movies]); // movies
+      createPagination([...movies]);
+      activeHandle(1, [...movies]); //   
+      repeatTr([...movies]);
+    }
+
+    loadData();
+
+    function createTr(data) {
+      let str = `
+          <tr>
+            <td>${data.myid}</td>
+            <td>${data.id}</td>
+            <td>${data.title}</td>
+            <td><img src='${data.small_cover_image}' /></td>
+            <td>${data.year}</td>
+            <td>${data.rating}</td>
+          </tr>
+        `
+      return str;
+    }
+
+    function repeatTr(movies) {
+      // load된 영화 목록과 상관 없는 변수명 
+      let str = ''
+      console.log(lastIndex, startIndex);
+      for (let a = startIndex; a < Math.min(lastIndex, movies.length); a++) {
+        str += createTr(movies[a]);
+      }
+
+      document.querySelector('.table-container tbody').innerHTML = str;
+    }
+
+
+    function setPagePerCount(value) {
+      pagePerCount = value;
+    }
+
+
+    select.addEventListener('change', () => {
+      setPagePerCount(select.value);
+      currentPage = 1; // select 버튼 동작시 마다 맨 처음 페이지 나오게 작업함 
+      console.log(pagePerCount);
+
+      //createPagination(); // pager 새로 생성 
+
+      calculater(movies);
+      createPagination(movies);
+      repeatTr(movies);
+    })
+
+
+    function createPagination() {
+      const pagination = document.querySelector('.pagination');
+      pagination.innerHTML = '';
+
+      for (let a = 1; a <= pagers; a++) {
+        let li = document.createElement('li');
+        li.classList.add('list');
+        li.innerHTML = a;
+        pagination.append(li);
+        if (currentPage === a) li.classList.add('active');
+        li.addEventListener('click', currentPageHandle)
+      }
+    }
+
+    function currentPageHandle(event) {
+      console.log(event.target.innerHTML)
+      currentPage = event.target.innerHTML;
+      calculater(movies);
+      createPagination(movies);
+      activeHandle(currentPage, movies); //   
+      repeatTr(movies);
+    }
+
+    // prev, next 표시할지 말지 결정
+    // 문제 있음 
+    function activeHandle() {
+      if (currentPage <= 1) prev.style.display = "none";
+      else prev.style.display = "block";
+
+      if (currentPage >= pagers) next.style.display = "none";
+      else next.style.display = "block";
+      // }
+
+      // function pagerActive() {
+      const lis = document.querySelectorAll('li');
+      // li 인덱스 번호는 0부터 사용하므로 
+      // currentPage 1번부터 사용하고 있음
+
+      for (let a = 0; a < pagers; a++) {
+        lis[a].classList.remove('active');
+      }
+      lis[currentPage - 1].classList.add('active');
+      // 1 2 3 4 
+    }
+    next.addEventListener('click', () => {
+      if (currentPage === pagers) return;
+      currentPage++; // 총 pagers 개수보다 크면 안됨
+      calculater(movies);
+      createPagination(movies);
+      activeHandle(1, movies); //   
+      repeatTr(movies);
+    })
+    prev.addEventListener('click', () => {
+      if (currentPage < 1) return;
+      currentPage--; // 0보다 작으면 안됨
+      calculater(movies);
+      createPagination(movies);
+      activeHandle(1, movies); //   
+      repeatTr(movies);
+    })
+
+
+    const searchBtn = document.querySelector('.searchBtn');
+    searchBtn.addEventListener('click', () => {
+      const searchText = search.value.toLowerCase();
+      //title만 검색하는 경우 
+
+      console.log(searchText)
+      const filtered = movies.filter(movie => movie.title.toLowerCase().includes(searchText))
+      // tiltered 된 영화가 여러개일때 
+      calculater([...filtered]);
+      createPagination([...filtered]);
+      activeHandle(1, [...filtered]); //   
+      repeatTr([...filtered]);
+    })
+  </script>
+  <!-- 
+    검색어 달기, 정렬기능 
+    텍스트, 이미지 검색 
+  -->
+  <script>
+    let sortCol = 'index'
+    let order = true;
+    // sort 
+    document.querySelector('thead').addEventListener('click', (event) => {
+      console.log(event.target)
+
+      if (event.target.tagName === 'TH') {
+        var colname = event.target.innerHTML;
+        order = sortCol === colname ? !order : true;
+        sortCol = colname;
+
+        movies.sort((a, b) => {
+          return a[sortCol] > b[sortCol] ? 1 : -1;
+        })
+        //movies.sort((a, b) => a[sortCol].localeCompare(b[sortCol]))
+        movies.sort((a, b) => {
+          if (order)
+            return a[sortCol] > b[sortCol] ? 1 : -1;
+          else
+            return b[sortCol] > a[sortCol] ? 1 : -1;
+        })
+        console.log(movies)
+        calculater([...movies]);
+        createPagination([...movies]);
+        activeHandle(1, [...movies]); //  
+        repeatTr([...movies]);
+      }
+    })
+  </script>
+</body>
+
+</html>

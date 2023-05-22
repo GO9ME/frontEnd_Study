@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <!-- <script src="./test01_sort.js"></script> -->
+  <script>
+    const ary1 = [ 11, 22, 1, 35, 40];
+    const ary2 = ['orange', 'grape', 'apple', 'banana'];
+    const ary3 = ['바나나', '포도', '사과' , '오렌지'];
+    // 객체( 배열, 객체, 함수, 클래스)
+    const copy1 = ary1;
+    console.log('copy1 = ary1',  copy1 === ary1 );
+    // 수정전
+    console.log(ary1)
+    console.log(copy1)
+    copy1[0]="test";
+    // 수정후
+    console.log(ary1)
+    console.log(copy1)
+
+    // 일일이 값 전달 
+    let copy2 = [];
+    ary1.forEach( ary=>{
+        copy2.push(ary)
+    })
+    console.log('copy2 = ary1 ', copy2 === ary1 );
+    copy2[0] ='copy';
+    console.log(ary1);
+    console.log(copy2);
+    
+    // 1단계 복사
+    let copy3 = [...ary1];
+    console.log('copy3 = ary1 ', copy3 === ary1 );
+    console.log(ary1);
+    console.log(copy3);
+    copy3[0] = 'javascript';
+    console.log(ary1);
+    console.log(copy3);
+
+    /// 오름차순 
+    ary1.sort((prev, next)=> prev - next); // 1, -1, 0
+    const acAry = [...ary1];
+    console.log(acAry)
+    console.log('ary1 : ', ary1);
+
+    // 내림차순
+    ary1.sort((prev, next)=> next - prev); // 1, -1, 0
+    const dcAry = [...ary1];
+    console.log(dcAry)
+    console.log('ary1 : ', ary1);
+  </script>
+</body>
+</html>
