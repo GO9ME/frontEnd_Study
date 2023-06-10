@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    test() : includes()처럼 패턴에 맞는 값을 찾아서  true, false  반환
+    exec() : 패턴에 맞는 결과를 첫번째 데이터만 반환
+    match() : 패턴에 맞는 결과를 첫번째 데이터만 반환, /g, 여러데이터를 배열리턴
+    replace() :  공백등 제거, 변경
+  </div>
+  <script>
+    const str = 'Hi there, Nice to meet you. hi';
+
+    const result = /youhi/.test(str);
+    console.log(result);
+
+    const result2 = /hi/.exec(str);
+    console.log( result2 ); // 배열
+    
+    const result3 = /ha/.exec(str);
+    console.log( result3 ); // 검색패턴이 없으면  null
+
+    const result4 = /hi/ig.exec(str);
+    console.log( result4 ); // 배열, g 플래그를 사용해도 첫번째 데이터만 검색 
+    
+    const result5 = str.match(/hi/);
+    console.log( result5 ); // test() 같은 결과
+
+    const result6 = str.match(/hi/i);
+    console.log( result6 ); // test() 같은 결과
+
+    // match() 사용하기 편리
+    const result7 = str.match(/hi/ig);
+    console.log( result7 ); // ['Hi', 'hi']
+
+    const tel1 = '010-456-789';
+    const tel2 = '010-1456-9789';
+
+    const rettern1 = /\d\d\d-\d{4}-\d{4}/;
+    const result8 = rettern1.test(tel1);
+    console.log( result8 );
+    
+    const result9 = rettern1.test(tel2);
+    console.log( result9 );
+
+    
+    const target = 'http://youtu.be/uuxUe_Nbnmo';
+    const pettern2 = /com\b/
+    const pettern3 = /com$/
+    console.log(pettern2.test(target));
+    console.log(pettern3.test(target));
+    
+    const target2 = 'http://youtu.be/uuxUe_Nbnmo.com'; 
+    console.log(pettern2.test(target2));
+    console.log(pettern3.test(target2));
+
+    const pettern4 = /https?/;
+    const pettern5 = /(http|https)?:\/\//;
+    console.log(pettern4.test(target2));
+    console.log(pettern5.test(target2));
+
+    const id = 'jemicom24795';
+    const pettern6 = /[a-zA-Z0-9_]{8,}/;
+    console.log(pettern6.test(id));
+
+    // 확인
+    const email = 'jemicom_24795@gmail.com';
+    const pettern7 = /^[a-zA-Z0-9][_\.-]?[a-zA-Z0-9]*@[a-zA-Z0-9][_\.-]?\.[a-zA-Z]{2,3}$/;
+    console.log(pettern7.test(email));
+
+    const str10 = 'jdje#-230845';
+    const pettern8 = /[^a-zA-Z0-9]/;
+    console.log(pettern8.test(str10));
+    console.log(str10.replace(pettern8, ''));
+    
+    const str11 = '    jdje     230845      ';
+    const pettern9 = /[\s]+/g;  // 플래그 전체에서 찾기  // trim()
+    console.log(pettern9.test(str11));
+    console.log(str11.replace(pettern9, '').length);// 앞에 공백만 잘림
+    console.log(str11.length);
+  </script>
+</body>
+</html>
