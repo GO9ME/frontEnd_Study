@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+    <!-- <link rel="stylesheet" href="/styles/login.css"> -->
+    <style>
+        .log {
+            height: 100px;
+            background-color: antiquewhite;
+            line-height: 100px;
+        }
+
+        #logoutBtn {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="log"><span>로그인</span> <button id="logoutBtn">로그아웃</button> </div>
+    <div class="login-container">
+        <h1>다음을 입력해주세요.</h1>
+        <div class="login-box">
+            <form class="userid-form">
+                <label for="userId">userid</label>
+                <input type="text" id="userId" placeholder="5글자이상 영문자로 입력하세요." autocomplete="off">
+            </form>
+            <form class="password-form">
+                <label for="userPwd">비밀번호</label>
+                <input type="password" id="userPwd" placeholder="문자,숫자,특수문자를 포함한 8자리">
+            </form>
+            <div>
+                <a href="/login/searchid" id="searchId">아이디 찾기</a> &nbsp;
+                <a href="/login/searchpwd" id="searchPwd">비밀번호 찾기</a> &nbsp;
+                <a href="/register" id="registerBtn">회원가입</a> &nbsp;
+            </div>
+            <div>
+                <button id="loginBtn">로그인</button>
+                <button id="resetBtn">취소</button>
+            </div>
+        </div>
+    </div>
+    <div class="userid-view"></div>
+    <script>
+        document.querySelector('#loginBtn').addEventListener('click', () => {
+            const user = {
+                userId: userId.value,
+                userPwd: userPwd.value,
+            }
+
+            console.log(JSON.stringify(user));// POST
+            const url = 'http://localhost:3000/login';
+
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(user),
+                headers: { 'Content-Type': 'application/json;charset=utf-8' }
+            }).then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        //location.href = 'http://localhost:3000/index';
+                        document.querySelector('.log span').innerHTML = res.message;
+                        document.querySelector('#logoutBtn').style.display = 'block';
+                    } else {
+                        alert(res.message);
+                    }
+                })
+
+            userId.value = "";
+            userPwd.value = "";
+        })
+
+        document.querySelector('#logoutBtn').addEventListener('click', () => {
+            document.querySelector('.log span').innerHTML = '로그인'
+            document.querySelector('#logoutBtn').style.display = 'none';
+
+            // DELETE : user만 지우고 있음 
+            // 쿠키따라 용도가 다른 쿠키를 지워야 하므로 
+            // 지울 쿠키에 대한 데이터 
+            fetch('http://localhost:3000/login', {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(res => {
+                    if (res.success) {
+                        alert('정상 로그아웃 되었습니다.');
+                        // 어떻게 처리할까 고민 
+                    }
+                })
+        })
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const myCookie = document.cookie;
+            console.log(myCookie);
+            // session 제어일때 다음 출력
+            // connect.sid=s%3AwWQjTo9Hh8bhVJhGmKHSWRmlqlUMUZQ5.up4Y0ALesDuaxpNjeF%2B7gcdWfpAjlwm9xMLX6%2B3cgTM 
+
+            const cookiesAry = myCookie.split(';');
+            cookiesAry.forEach(data => {
+                if (data.includes('user')) {
+                    location.href = 'http://localhost:3000'
+                }
+            })
+        })
+    </script>
+
+</body>
+
+</html>

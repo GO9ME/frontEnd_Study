@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/styles/register.css">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+</head>
+
+<body>
+    <div class="searchId-container">
+        <h1>아이디 찾기</h1>
+        <div class="searchId-box">
+            <form class="name-form">
+                <label for="userName">이름</label>
+                <input type="text" id="userName" placeholder="2글자이상 문자로 입력하세요." autocomplete="off">
+            </form>
+
+            <form class="userphone-form">
+                <label for="userPhone">전화번호</label>
+                <input type="text" id="userPhone" placeholder="(022)4564-4567">
+                <p id="userPhoneErr">(022)4564-4567, 022-4564-4567, 022 4564 4567</p>
+            </form>
+
+            <div>
+                <button id="serarchIdBtn">아이디 찾기</button>
+                <button id="resetBtn">취소</button>
+            </div>
+        </div>
+    </div>
+    <div class="log"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        $('#serarchIdBtn').on('click', function(){
+            const url = `http://localhost:3000/login/searchid`;
+            fetch(url, {
+                method : 'POST',
+                body: JSON.stringify({
+                    userName : $('#userName').val(),
+                    userPhone : $('#userPhone').val(),
+                }),
+                headers:{'Content-Type':'application/json;charset=utf-8'}
+            })
+            .then(res=>res.json())
+            .then(res=>{
+                // 찾은 아이디를 찾아서 log에 출력 
+                if( res.success ){
+                    $('.log').html(res.message + ' 님 안녕하세요.');
+                }else{
+                    alert(res.message );
+                }
+            })
+            
+        })
+    </script>
+</body>
+
+</html>
