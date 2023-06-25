@@ -1,0 +1,22 @@
+*{
+  margin:0; padding:0; 
+  box-sizing: border-box;
+}
+a{ 
+  text-decoration: none;
+  color:inherit;
+}
+li{
+  list-style-type: none;
+}
+
+span{
+  display: block;
+}
+button{ 
+  padding: 10px; 
+}
+/* 
+  styled-components
+  https://styled-components.com/
+*/
