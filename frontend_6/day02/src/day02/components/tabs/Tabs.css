@@ -1,0 +1,42 @@
+.tab-container{
+    width: 800px;
+    margin: 100px auto;
+}
+
+.tab-btns{
+    display: flex;
+    justify-content: center;
+}
+.tab-btns>li{
+    width: 33.333333%; 
+    line-height: 50px;
+    background-color: aliceblue;
+    border: 1px solid black;
+    border-right: none;
+    text-align: center;
+}
+.tab-btns>li:last-child{
+    border-right: 1px solid black;
+}
+.tab-btns>li.active{
+    background-color: black;
+    color: white;
+}
+
+.tab-container{
+    position: relative;
+}
+.tab-container .content{
+    position: absolute;
+    height: 300px;
+    width: 100%; 
+    background-color: papayawhip;
+    opacity: 0;
+    transition: 0.4s;
+}
+.tab-container .content >div{
+    padding: 20px;
+}
+.tab-container .content.active{
+    opacity: 1;
+}

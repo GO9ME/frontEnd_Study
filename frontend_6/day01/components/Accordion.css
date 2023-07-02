@@ -1,0 +1,34 @@
+/*
+.content{
+    display: none;
+}
+.content.active{
+     display: block;
+}
+*/
+.accordion-container{
+    width: 800px; 
+    margin:100px auto;
+}
+.title{ 
+    line-height: 50px;
+    background-color: skyblue;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.title.active{
+    background-color: darkblue;
+    color:white; 
+}
+.accordion-container .content{
+    height:  0px; 
+    overflow: hidden;
+    transition: 0.4s;
+}
+.accordion-container .content>div{
+    padding: 20px;  
+    background-color: pink;
+}
+.accordion-container .content.active{
+    height: 150px;
+}

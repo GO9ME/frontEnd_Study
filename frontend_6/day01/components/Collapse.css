@@ -1,0 +1,14 @@
+dl{
+    width: 800px;
+    /* margin: auto; */
+}
+dt{
+    line-height: 50px;
+    background-color: skyblue;
+}
+dd{
+    display: none;
+}
+dd.active{
+     display: block;
+}
