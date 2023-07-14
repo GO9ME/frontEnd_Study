@@ -1,0 +1,51 @@
+.horiSlider-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.horiSlider-container .imgs-container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.horiSlider-container .img-box{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left:100%;
+    transition: none;
+}
+
+.horiSlider-container .img-box.show{
+     left:0; 
+     transition: 0.4s;
+}
+
+.horiSlider-container .img-box img{
+    width:100%;
+}
+
+.horiSlider-container .indecator{ 
+    position: absolute;
+    top:100px; 
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 30px;
+}
+
+.horiSlider-container .ctrl-btn{ 
+    position: absolute;
+    top: 50%;
+    font-size: 50px;
+}
+.horiSlider-container .ctrl-btn.left{
+    left:100px;
+}
+.horiSlider-container .ctrl-btn.right{
+    right:100px;
+}
