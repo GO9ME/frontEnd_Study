@@ -1,0 +1,36 @@
+html_css_java : 3개월차까지
+/index.html
+/images/img...
+/model/.json
+/styles/.css
+/script/.js
+
+git add  . 
+
+
+node.js : 45개월차
+/index.js
+/model/db.js
+/routes/
+/views/html
+/public/script
+/public/style
+/public/images
+/public/video
+
+React  git 배포
+npm i gh-pages -D
+
+
+// react : github => git pages
+// react : github => cloudtype
+// database => github => cloudtype 
+// node server => github => cloudtype
+
+
+// database 
+// 월,화쯤 영상 만들어 올려 드릴께요 
+
+
+
+

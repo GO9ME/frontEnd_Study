@@ -1,0 +1,50 @@
+.fadeSlider-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.fadeSlider-container .imgs-container{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.fadeSlider-container .img-box{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: 0.4s;
+}
+
+.fadeSlider-container .img-box.show{
+    opacity: 1;
+}
+
+.fadeSlider-container .img-box img{
+    width:100%;
+}
+
+.fadeSlider-container .indecator{ 
+    position: absolute;
+    top:100px; 
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 30px;
+}
+
+.fadeSlider-container .ctrl-btn{ 
+    position: absolute;
+    top: 50%;
+    font-size: 50px;
+}
+.fadeSlider-container .ctrl-btn.left{
+    left:100px;
+}
+.fadeSlider-container .ctrl-btn.right{
+    right:100px;
+}
