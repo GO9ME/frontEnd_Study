@@ -1,0 +1,21 @@
+.post-content{
+    padding: 20px; 
+}
+.post-content span{
+    display: block;
+}
+.post-title{
+
+}
+.post-body{
+    line-height: 2;
+
+    /* overflow: hidden;
+    white-space:nowrap;
+    text-overflow: ellipsis; */
+}
+
+.post-datetime{
+    font-size: 12px;
+    font-weight: bold;
+}
