@@ -1,0 +1,47 @@
+*{
+    margin:0; 
+    padding:0; 
+    box-sizing: border-box;
+}
+
+a{
+    color:inherit;
+    text-decoration: none;
+}
+
+a:hover{
+    background-color: yellow;
+}
+
+li{
+    list-style-type: none;
+}
+
+.section-container{
+    width:1200px; 
+    margin:auto; 
+    background-color: beige;
+}
+@media screen and  (max-width:1200px){
+    body{
+        background-color: antiquewhite;
+    }
+    .section-container{
+        width: 95%; 
+    }
+}
+@media screen and  (max-width:1024px){
+    body{
+        background-color: rgb(216, 250, 215);
+    }
+}
+@media screen and  (max-width:768px){
+    body{
+        background-color: rgb(215, 245, 250);
+    }
+}
+@media screen and  (max-width:480px){
+    body{
+        background-color: rgb(250, 215, 249);
+    }
+}
